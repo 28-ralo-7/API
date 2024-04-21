@@ -1,0 +1,17 @@
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.csproj.AssemblyReference.cache
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.AssemblyInfoInputs.cache
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.AssemblyInfo.cs
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.csproj.CoreCompileInputs.cache
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Services.deps.json
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Services.runtimeconfig.json
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Services.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Services.pdb
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Domain.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\API.Domain.pdb
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Serv.A72B4071.Up2Date
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.dll
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\refint\API.Services.dll
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.pdb
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\API.Services.genruntimeconfig.cache
+C:\Users\ДИ\Desktop\API\API.Services\obj\Debug\net8.0\ref\API.Services.dll
