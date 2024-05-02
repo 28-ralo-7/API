@@ -9,6 +9,7 @@
       "API/1.0.0": {
         "dependencies": {
           "API.Domain": "1.0.0",
+          "API.Services": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.4",
           "Microsoft.EntityFrameworkCore": "8.0.4",
           "Microsoft.EntityFrameworkCore.Design": "8.0.4",
@@ -554,13 +555,34 @@
         }
       },
       "System.Threading.Channels/6.0.0": {},
-      "API.Domain/1.0.0": {
+      "API.Database/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.4",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.2"
         },
         "runtime": {
+          "API.Database.dll": {}
+        }
+      },
+      "API.Domain/1.0.0": {
+        "dependencies": {
+          "API.Database": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "8.0.4",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.2"
+        },
+        "runtime": {
           "API.Domain.dll": {}
+        }
+      },
+      "API.Services/1.0.0": {
+        "dependencies": {
+          "API.Database": "1.0.0",
+          "API.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "8.0.4",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.2"
+        },
+        "runtime": {
+          "API.Services.dll": {}
         }
       }
     }
@@ -907,7 +929,17 @@
       "path": "system.threading.channels/6.0.0",
       "hashPath": "system.threading.channels.6.0.0.nupkg.sha512"
     },
+    "API.Database/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "API.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "API.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

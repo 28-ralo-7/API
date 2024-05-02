@@ -16,4 +16,14 @@ public class GroupRepository : IGroupRepository
     {
         return _context.Groups.FirstOrDefault(group => group.Id == groupId);
     }
+
+    public Group[] GetGroupByUserId(Guid? practiceLeadId)
+    {
+        Practiceschedule[] practices = _context.Practiceschedules
+            .Where(practice => practice.Practiceleadid == practiceLeadId)
+            .ToArray();
+        Guid[] groupIds = practices.Select(practice => practice.Groupid).ToArray();
+        
+        return _context.Groups.Where(group => groupIds.Contains(group.Id)).ToArray();
+    }
 }

@@ -20,11 +20,17 @@ namespace API.Services.user
         public UserDomain? GetUserByLoginAndPasswordHash(string login, string passwordHash)
         {
             User? user = _userRepository.GetUserByLoginAndPasswordHash(login, passwordHash);
-            GroupDomain groupDomain = _groupSevice.GetGroupById(user.Groupid);
-
-            UserDomain userDomain = new UserDomain(user, groupDomain);
             
-            return userDomain;
+            if (user != null)
+            {
+                GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
+
+                UserDomain userDomain = new UserDomain(user, groupDomain);
+            
+                return userDomain; 
+            }
+
+            return null;
         }
     }
 }

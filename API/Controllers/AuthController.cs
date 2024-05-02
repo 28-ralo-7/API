@@ -1,15 +1,13 @@
-﻿using System.Security.Claims;
-using API.Domain.auth;
+﻿using API.Domain.auth;
 using API.Domain.tools;
-using API.Domain.user;
 using API.Services.Auth.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/[action?]")]
     [ApiController]
+    [Route("[controller]/[action]")]
     public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
@@ -19,9 +17,10 @@ namespace API.Controllers
             _authService = authService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Auth(String login, String password)
+        [HttpPost]
+        public async Task<Response> Auth(string? login, string? password)
         {
+            Response result = new Response();
             Response response = _authService.Authorization(login, password);
 
             if (response.IsSuccess)
@@ -35,17 +34,22 @@ namespace API.Controllers
                     
                 switch (authResponse.User.Role)
                 {
-                    case (int)Role.Administrator:
+                    case (int)Role.PracticeLead:
                         returnedUrl = "groups";
                         break;
-                    case (int)Role.PracticeLead:
+                    case (int)Role.Administrator:
                         returnedUrl = "adminPanel/home";
                         break;
                 }
-                return Ok(returnedUrl);
+
+                result = new Response(returnedUrl);
+
+                return result;
             }
 
-            return Unauthorized(response.Errors);
+            result.AddErrors(response.Errors);
+
+            return result;
         }
     }
 }

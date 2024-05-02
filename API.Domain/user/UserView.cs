@@ -12,7 +12,6 @@ namespace API.Domain.user
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronomic{ get; set; }
-        public RoleDomain Role { get; set; }
 
     }
 }

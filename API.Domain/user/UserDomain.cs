@@ -18,11 +18,11 @@ public class UserDomain
 
     public int Role { get; set; }
 
-    public GroupDomain Group { get; set; }
+    public GroupDomain? Group { get; set; }
 
     public bool IsRemoved { get; set; }
 
-    public UserDomain(Guid id, string surname, string name, string? patronomic, string login, string passwordhash, int role, GroupDomain group, bool isRemoved)
+    public UserDomain(Guid id, string surname, string name, string? patronomic, string login, string passwordhash, int role, GroupDomain? group, bool isRemoved)
     {
         Id = id;
         Surname = surname;

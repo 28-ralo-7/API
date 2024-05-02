@@ -7,6 +7,7 @@ C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.GeneratedMS
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.AssemblyInfoInputs.cache
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.AssemblyInfo.cs
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.csproj.CoreCompileInputs.cache
+C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.sourcelink.json
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.dll
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\refint\API.Database.dll
 C:\Users\ДИ\Desktop\API\API.Database\obj\Debug\net8.0\API.Database.pdb

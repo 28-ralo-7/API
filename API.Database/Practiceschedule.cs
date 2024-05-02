@@ -7,6 +7,8 @@ public partial class Practiceschedule
     public Guid Practiceid { get; set; }
 
     public Guid Groupid { get; set; }
+    
+    public Guid Practiceleadid { get; set; }
 
     public DateOnly Datestart { get; set; }
 

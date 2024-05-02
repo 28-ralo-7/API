@@ -100,6 +100,7 @@ public partial class PracticetrackerContext : DbContext
             entity.Property(e => e.Dateend).HasColumnName("dateend");
             entity.Property(e => e.Datestart).HasColumnName("datestart");
             entity.Property(e => e.Groupid).HasColumnName("groupid");
+            entity.Property(e => e.Practiceleadid).HasColumnName("practiceleadid");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Isremoved)
                 .HasDefaultValue(false)

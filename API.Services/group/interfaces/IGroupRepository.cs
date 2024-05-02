@@ -5,4 +5,5 @@ namespace API.Services.group.interfaces;
 public interface IGroupRepository
 {
     Group GetGroupById(Guid? groupId);
+    Group[] GetGroupByUserId(Guid? groupId);
 }
