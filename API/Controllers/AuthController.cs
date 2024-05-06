@@ -1,8 +1,10 @@
 ﻿using API.Domain.auth;
 using API.Domain.tools;
+using API.Domain.user;
 using API.Services.Auth.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using static API.Tools.SessionExtensions;
 
 namespace API.Controllers
 {
@@ -29,9 +31,9 @@ namespace API.Controllers
                 AuthResponse authResponse = response.Data as AuthResponse;
 
                 await HttpContext.SignInAsync(authResponse.ClaimsPrincipal);
-
-                HttpContext.Items["SystemUser"] = authResponse.User;
-                    
+                
+                HttpContext.Session.Set<UserDomain>("user", authResponse.User);
+                
                 switch (authResponse.User.Role)
                 {
                     case (int)Role.PracticeLead:

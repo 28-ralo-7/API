@@ -1,4 +1,5 @@
 using API.Database;
+using API.Middleware;
 using API.Services.Auth;
 using API.Services.Auth.Interfaces;
 using API.Services.group;
@@ -10,7 +11,29 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".MyApp.Session";
+    
+    options.IdleTimeout = TimeSpan.FromSeconds(60 * 60 * 24);
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+builder.Services.AddSession(opt =>
+{
+    opt.Cookie.IsEssential = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,6 +53,8 @@ builder.Services.AddTransient<PracticetrackerContext>();
 
 var app = builder.Build();
 
+app.UseSession();  
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -40,7 +65,12 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
+    .AllowCredentials()
+);
+app.UseCors("AllowSpecificOrigin");
+
+app.UseMiddleware<CheckSystemUser>();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

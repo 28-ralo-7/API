@@ -23,7 +23,16 @@ public class GroupRepository : IGroupRepository
             .Where(practice => practice.Practiceleadid == practiceLeadId)
             .ToArray();
         Guid[] groupIds = practices.Select(practice => practice.Groupid).ToArray();
-        
-        return _context.Groups.Where(group => groupIds.Contains(group.Id)).ToArray();
+
+        List<Group> groups = new List<Group>();
+
+        foreach (var group in _context.Groups)
+        {
+            if (groupIds.Contains(group.Id))
+            {
+                groups.Add(group);
+            }
+        }
+        return groups.ToArray();
     }
 }

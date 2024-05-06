@@ -19,14 +19,11 @@ public class GroupController : BaseController
         _groupService = groupService;
     }
 
-    [Authorize(Roles = "1,2")]
+    [Authorize(Roles = "2")]
     [HttpGet]
     public Response GetGroupsByPermissions()
     {
         Response response = new Response();
-
-        var httpContext = HttpContext.Items;
-        
         GroupDomain[] groupDomains = _groupService.GetGroupsByPermission(SystemUser);
         
         if (groupDomains == null || groupDomains.Length == 0)

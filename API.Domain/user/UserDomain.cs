@@ -22,6 +22,8 @@ public class UserDomain
 
     public bool IsRemoved { get; set; }
 
+    public UserDomain() {}
+    
     public UserDomain(Guid id, string surname, string name, string? patronomic, string login, string passwordhash, int role, GroupDomain? group, bool isRemoved)
     {
         Id = id;
