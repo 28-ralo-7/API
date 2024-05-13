@@ -12,5 +12,9 @@ public partial class Practicelog
 
     public string? Contract { get; set; }
 
+    public string? Report { get; set; }
+
     public Guid? Companyid { get; set; }
+    
+    public Boolean Isremoved { get; set; }
 }

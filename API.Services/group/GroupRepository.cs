@@ -14,13 +14,14 @@ public class GroupRepository : IGroupRepository
 
     public Group GetGroupById(Guid? groupId)
     {
-        return _context.Groups.FirstOrDefault(group => group.Id == groupId);
+        return _context.Groups.FirstOrDefault(group => group.Id == groupId && !group.Isremoved);
     }
 
     public Group[] GetGroupByUserId(Guid? practiceLeadId)
     {
         Practiceschedule[] practices = _context.Practiceschedules
-            .Where(practice => practice.Practiceleadid == practiceLeadId)
+            .Where(practice => practice.Practiceleadid == practiceLeadId  
+                               && practice.Isremoved != true)
             .ToArray();
         Guid[] groupIds = practices.Select(practice => practice.Groupid).ToArray();
 

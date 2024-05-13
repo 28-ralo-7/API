@@ -19,7 +19,14 @@ namespace API.Services.user
 
         public User? GetUserByLoginAndPasswordHash(string login, string passwordHash)
         {
-            return _context.Users.FirstOrDefault(user => user.Login == login && user.Passwordhash == passwordHash);
+            return _context.Users.FirstOrDefault(user => user.Login == login && user.Passwordhash == passwordHash && user.Isremoved != true);
+        }
+
+        public User[] GetUsersByIds(Guid[] ids)
+        {
+            return _context.Users
+                .Where(user => ids.Contains(user.Id) && user.Isremoved != true)
+                .ToArray();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace API.Controllers
                 switch (authResponse.User.Role)
                 {
                     case (int)Role.PracticeLead:
-                        returnedUrl = "groups";
+                        returnedUrl = "practices";
                         break;
                     case (int)Role.Administrator:
                         returnedUrl = "adminPanel/home";

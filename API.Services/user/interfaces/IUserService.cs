@@ -10,5 +10,6 @@ namespace API.Services.user.interfaces
     public interface IUserService
     {
         UserDomain? GetUserByLoginAndPasswordHash(string login, string passwordHash);
+        UserDomain[] GetUsersByIds(Guid[] ids);
     }
 }

@@ -85,10 +85,16 @@ public partial class PracticetrackerContext : DbContext
             entity.Property(e => e.Contract)
                 .HasColumnType("character varying")
                 .HasColumnName("contract");
+            entity.Property(e => e.Report)
+                .HasColumnType("character varying")
+                .HasColumnName("report");
             entity.Property(e => e.Grade).HasColumnName("grade");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Practicescheduleid).HasColumnName("practicescheduleid");
             entity.Property(e => e.Userid).HasColumnName("userid");
+            entity.Property(e => e.Isremoved)
+                .HasDefaultValue(false)
+                .HasColumnName("isremoved");
         });
 
         modelBuilder.Entity<Practiceschedule>(entity =>

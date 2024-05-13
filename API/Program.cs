@@ -2,8 +2,12 @@ using API.Database;
 using API.Middleware;
 using API.Services.Auth;
 using API.Services.Auth.Interfaces;
+using API.Services.company;
+using API.Services.company.interfaces;
 using API.Services.group;
 using API.Services.group.interfaces;
+using API.Services.practice;
+using API.Services.practice.interfaces;
 using API.Services.user;
 using API.Services.user.interfaces;
 using API.Services.user.Interfaces;
@@ -48,6 +52,12 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IGroupRepository, GroupRepository>();
+
+builder.Services.AddTransient<IPracticeService, PracticeService>();
+builder.Services.AddTransient<IPracticeRepository, PracticeRepository>();
+
+builder.Services.AddTransient<ICompanyService, CompanyService>();
+builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 
 builder.Services.AddTransient<PracticetrackerContext>();
 

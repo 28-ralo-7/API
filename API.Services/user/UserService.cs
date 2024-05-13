@@ -24,13 +24,28 @@ namespace API.Services.user
             if (user != null)
             {
                 GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
-
                 UserDomain userDomain = new UserDomain(user, groupDomain);
             
                 return userDomain; 
             }
 
             return null;
+        }
+
+        public UserDomain[] GetUsersByIds(Guid[] ids)
+        {
+            List<UserDomain> userDomains = new List<UserDomain>();
+            User[] users = _userRepository.GetUsersByIds(ids);
+
+            foreach (User user in users)
+            {
+                GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
+                UserDomain userDomain = new UserDomain(user, groupDomain);
+                
+                userDomains.Add(userDomain);
+            }
+
+            return userDomains.ToArray();
         }
     }
 }
