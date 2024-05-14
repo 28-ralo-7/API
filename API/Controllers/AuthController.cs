@@ -3,6 +3,7 @@ using API.Domain.tools;
 using API.Domain.user;
 using API.Services.Auth.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using static API.Tools.SessionExtensions;
 
@@ -52,6 +53,19 @@ namespace API.Controllers
             result.AddErrors(response.Errors);
 
             return result;
+        }
+
+        [HttpGet]
+        public Response CheckAuthAndPermission()
+        {
+            return _authService.CheckAuthAndPermission(SystemUser);;
+        }
+
+        [HttpPost]
+        public async Task LogOn()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
         }
     }
 }

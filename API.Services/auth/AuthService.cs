@@ -1,13 +1,8 @@
 ﻿using API.Domain.auth;
 using API.Services.Auth.Interfaces;
-using System;
 using System.Security.Cryptography;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using API.Database;
 using API.Domain.tools;
 using API.Domain.user;
 using API.Services.user.interfaces;
@@ -47,6 +42,26 @@ namespace API.Services.Auth
                 response.Data = new AuthResponse(user, claimsPrincipal);
             }
             
+
+            return response;
+        }
+        
+        public Response CheckAuthAndPermission(UserDomain systemUser)
+        {
+            Response response;
+
+            if (systemUser?.Role == 1)
+            {
+                response = new Response("adminPanel/home");
+            }
+            else if (systemUser?.Role == 2)
+            {
+                response = new Response("practices");
+            }
+            else
+            {
+                response = new Response("login");
+            }
 
             return response;
         }

@@ -7,6 +7,7 @@ public class PracticeLogView
 {
     public string? Id { get; set; }
     public string? Name { get; set; }
+    public string? Period { get; set; }
     public Item Group { get; set; }
     public PracticeLogItemView[]? LogItems { get; set; }
 
@@ -14,6 +15,7 @@ public class PracticeLogView
     {
         Id = domain.Id;
         Name = domain.Name;
+        Period = domain.Period;
         Group = new Item(
             domain.Group?.ToString() ?? "",
             domain.Group?.Name ?? ""

@@ -9,6 +9,7 @@ public class PracticeLogDomain
 {
     public string Id { get; set; } = null!;
     public string Name { get; set; } = null!;
+    public string Period { get; set; } = null!;
     public GroupDomain Group { get; set; } = null!;
     public PracticeLogItemDomain[] LogItems { get; set; } = null!;
 
@@ -22,6 +23,7 @@ public class PracticeLogDomain
     {
         Id = practiceschedule.Id.ToString();
         Name = practice.Name;
+        Period = practiceschedule.Datestart.ToShortDateString() + " - " + practiceschedule.Dateend.ToShortDateString();
         Group = group;
         LogItems = practicelogItems
             .Select(item => 
