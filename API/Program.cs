@@ -1,5 +1,7 @@
 using API.Database;
 using API.Middleware;
+using API.Services.adminPanel;
+using API.Services.adminPanel.interfaces;
 using API.Services.Auth;
 using API.Services.Auth.Interfaces;
 using API.Services.company;
@@ -58,6 +60,8 @@ builder.Services.AddTransient<IPracticeRepository, PracticeRepository>();
 
 builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+
+builder.Services.AddTransient<IAdminPanelService, AdminPanelService>();
 
 builder.Services.AddTransient<PracticetrackerContext>();
 

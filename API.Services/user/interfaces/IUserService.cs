@@ -11,5 +11,6 @@ namespace API.Services.user.interfaces
     {
         UserDomain? GetUserByLoginAndPasswordHash(string login, string passwordHash);
         UserDomain[] GetUsersByIds(Guid[] ids);
+        UserDomain[] GetAllUsers();
     }
 }

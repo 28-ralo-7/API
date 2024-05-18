@@ -17,7 +17,7 @@ public class PracticeLogView
         Name = domain.Name;
         Period = domain.Period;
         Group = new Item(
-            domain.Group?.ToString() ?? "",
+            domain.Group?.Id.ToString() ?? "",
             domain.Group?.Name ?? ""
         );
         LogItems = domain.LogItems?.Select(item => new PracticeLogItemView(item)).ToArray();

@@ -16,7 +16,7 @@ public class UserDomain
 
     public string Passwordhash { get; set; } = null!;
 
-    public int Role { get; set; }
+    public Database.Role Role { get; set; }
 
     public GroupDomain? Group { get; set; }
 
@@ -24,7 +24,7 @@ public class UserDomain
 
     public UserDomain() {}
     
-    public UserDomain(Guid id, string surname, string name, string? patronomic, string login, string passwordhash, int role, GroupDomain? group, bool isRemoved)
+    public UserDomain(Guid id, string surname, string name, string? patronomic, string login, string passwordhash,  Database.Role role, GroupDomain? group, bool isRemoved)
     {
         Id = id;
         Surname = surname;
@@ -37,7 +37,7 @@ public class UserDomain
         IsRemoved = isRemoved;
     }
 
-    public UserDomain(User user, GroupDomain groupDomain)
+    public UserDomain(User user, GroupDomain groupDomain, Database.Role role)
     {
         Id = user.Id;
         Surname = user.Surname;
@@ -45,7 +45,7 @@ public class UserDomain
         Patronomic = user.Patronomic;
         Login = user.Login;
         Passwordhash = user.Passwordhash;
-        Role = user.Roletype;
+        Role = role;
         Group = groupDomain;
         IsRemoved = user.Isremoved;
     }

@@ -24,7 +24,8 @@ namespace API.Services.user
             if (user != null)
             {
                 GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
-                UserDomain userDomain = new UserDomain(user, groupDomain);
+                Database.Role role = _userRepository.GetRole(user.Roletype);
+                UserDomain userDomain = new UserDomain(user, groupDomain, role);
             
                 return userDomain; 
             }
@@ -40,7 +41,25 @@ namespace API.Services.user
             foreach (User user in users)
             {
                 GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
-                UserDomain userDomain = new UserDomain(user, groupDomain);
+                Database.Role role = _userRepository.GetRole(user.Roletype);
+                UserDomain userDomain = new UserDomain(user, groupDomain, role);
+                
+                userDomains.Add(userDomain);
+            }
+
+            return userDomains.ToArray();
+        }
+
+        public UserDomain[] GetAllUsers()
+        {
+            List<UserDomain> userDomains = new List<UserDomain>();
+            User[] users = _userRepository.GetAllUsers();
+
+            foreach (User user in users)
+            {
+                GroupDomain? groupDomain = _groupSevice.GetGroupById(user.Groupid);
+                Database.Role role = _userRepository.GetRole(user.Roletype);
+                UserDomain userDomain = new UserDomain(user, groupDomain,role );
                 
                 userDomains.Add(userDomain);
             }

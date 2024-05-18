@@ -25,6 +25,8 @@ public partial class PracticetrackerContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=practicetracker;Username=postgres;Password=1");
 
@@ -141,6 +143,18 @@ public partial class PracticetrackerContext : DbContext
             entity.Property(e => e.Surname)
                 .HasColumnType("character varying")
                 .HasColumnName("surname");
+        });
+        
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("role");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Type)
+                .HasColumnType("character varying")
+                .HasColumnName("type");
         });
 
         OnModelCreatingPartial(modelBuilder);

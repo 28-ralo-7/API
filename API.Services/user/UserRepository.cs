@@ -28,5 +28,17 @@ namespace API.Services.user
                 .Where(user => ids.Contains(user.Id) && user.Isremoved != true)
                 .ToArray();
         }
+
+        public User[] GetAllUsers(bool isRemoved = false)
+        {
+            return _context.Users
+                .Where(user => user.Isremoved != true)
+                .ToArray();
+        }
+
+        public Database.Role GetRole(int id)
+        {
+            return _context.Roles.FirstOrDefault(role => role.Id == id);
+        }
     }
 }

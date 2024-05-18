@@ -34,7 +34,7 @@ namespace API.Services.Auth
                 List<Claim> claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString())
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Id.ToString())
                 };
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -50,11 +50,11 @@ namespace API.Services.Auth
         {
             Response response;
 
-            if (systemUser?.Role == 1)
+            if (systemUser?.Role.Id == 1)
             {
-                response = new Response("adminPanel/home");
+                response = new Response("adminPanel/practiceSchedule");
             }
-            else if (systemUser?.Role == 2)
+            else if (systemUser?.Role.Id == 2)
             {
                 response = new Response("practices");
             }

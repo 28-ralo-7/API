@@ -10,5 +10,7 @@ namespace API.Services.user.Interfaces
     {
         User? GetUserByLoginAndPasswordHash(string login, string passwordHash);
         User[] GetUsersByIds(Guid[] ids);
+        User[] GetAllUsers(bool isRemoved = false);
+        Database.Role GetRole(int id);
     }
 }

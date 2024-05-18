@@ -35,13 +35,13 @@ namespace API.Controllers
                 
                 HttpContext.Session.Set<UserDomain>("user", authResponse.User);
                 
-                switch (authResponse.User.Role)
+                switch (authResponse.User.Role.Id)
                 {
                     case (int)Role.PracticeLead:
                         returnedUrl = "practices";
                         break;
                     case (int)Role.Administrator:
-                        returnedUrl = "adminPanel/home";
+                        returnedUrl = "adminPanel/practiceSchedule";
                         break;
                 }
 

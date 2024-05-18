@@ -17,6 +17,7 @@ public class CheckSystemUser
         Boolean isAuthRequest = context.Request.Path.Value != null &&
                                 (context.Request.Path.Value.Contains("Auth/Auth")
                                  || context.Request.Path.Value.Contains("Auth/CheckAuthAndPermission")
+                                 || context.Request.Path.Value.Contains("Auth/LogOn")
                                  || context.Request.Path.Value.Contains("/swagger"));
         
         if (isAuthRequest)
