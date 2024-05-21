@@ -36,4 +36,11 @@ public class GroupRepository : IGroupRepository
         }
         return groups.ToArray();
     }
+
+    public Group[] GetAllGroup(bool isRemoved = false)
+    {
+        return _context.Groups
+            .Where(group => !group.Isremoved)
+            .ToArray();
+    }
 }

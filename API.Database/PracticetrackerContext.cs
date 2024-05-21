@@ -119,8 +119,9 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("users");
+                .ToTable("users")
+                .HasKey(u => u.Id);
+                
 
             entity.Property(e => e.Groupid).HasColumnName("groupid");
             entity.Property(e => e.Id).HasColumnName("id");

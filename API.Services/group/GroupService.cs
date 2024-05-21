@@ -1,5 +1,6 @@
 using API.Database;
 using API.Domain.group;
+using API.Domain.shared;
 using API.Domain.user;
 using API.Services.group.interfaces;
 
@@ -31,5 +32,16 @@ public class GroupService : IGroupService
         GroupDomain[] groupDomains = groups.Select(group => new GroupDomain(group)).ToArray();
         
         return groupDomains;
+    }
+
+    public Item[] GetGroupOptions()
+    {
+        Group[] groups = _groupRepository.GetAllGroup();
+
+        Item[] options = groups
+            .Select(group => new Item(group.Id.ToString(), group.Name))
+            .ToArray();
+
+        return options;
     }
 }

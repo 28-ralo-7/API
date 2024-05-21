@@ -13,6 +13,7 @@ using API.Services.practice.interfaces;
 using API.Services.user;
 using API.Services.user.interfaces;
 using API.Services.user.Interfaces;
+using API.Services.user.validate;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -62,6 +63,7 @@ builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 
 builder.Services.AddTransient<IAdminPanelService, AdminPanelService>();
+builder.Services.AddTransient<VUserService>();
 
 builder.Services.AddTransient<PracticetrackerContext>();
 

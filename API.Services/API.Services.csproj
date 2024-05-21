@@ -24,4 +24,8 @@
     <ProjectReference Include="..\API.Domain\API.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="adminPanel\validate\" />
+  </ItemGroup>
+
 </Project>

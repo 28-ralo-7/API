@@ -1,10 +1,5 @@
 ﻿using API.Database;
 using API.Services.user.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Services.user
 {
@@ -22,11 +17,21 @@ namespace API.Services.user
             return _context.Users.FirstOrDefault(user => user.Login == login && user.Passwordhash == passwordHash && user.Isremoved != true);
         }
 
+        public User? GetUserByLogin(string login)
+        {
+            return _context.Users.FirstOrDefault(user => user.Login == login && user.Isremoved != true);
+        }
+
         public User[] GetUsersByIds(Guid[] ids)
         {
             return _context.Users
                 .Where(user => ids.Contains(user.Id) && user.Isremoved != true)
                 .ToArray();
+        }
+
+        public User? GetUserById(Guid id)
+        {
+            return _context.Users.FirstOrDefault(user => user.Id == id && user.Isremoved != true);
         }
 
         public User[] GetAllUsers(bool isRemoved = false)
@@ -39,6 +44,29 @@ namespace API.Services.user
         public Database.Role GetRole(int id)
         {
             return _context.Roles.FirstOrDefault(role => role.Id == id);
+        }
+
+        public Database.Role[] GetAllRoles(bool isRemoved = false)
+        {
+            return _context.Roles.ToArray();
+        }
+
+        public void RemoveUser(User user)
+        {
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
+
+        public void EditUser(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
     }
 }
