@@ -45,7 +45,7 @@ public class VUserService
         {
             User? user = _userRepository.GetUserByLogin(blank.Login);
             string blankId = blank.Id ?? "";
-            if (user != null && user?.Id != null && user.Id != Guid.Parse(blankId))
+            if (user != null && user?.Id != null && user.Id.ToString() != blankId)
             {
                 errors.Add("Пользователь с таким логином уже есть");
             }

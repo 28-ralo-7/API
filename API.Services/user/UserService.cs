@@ -128,8 +128,13 @@ namespace API.Services.user
         {
             Guid id = Guid.NewGuid();
             int roleType = Int32.Parse(blank.RoleId);
-            Guid groupId = Guid.Parse(blank.GroupId);
             string passwordHash = GetPasswordHash(blank.Password);
+            Guid? groupId = null;
+
+            if (blank.RoleId == "3")
+            {
+                groupId = Guid.Parse(blank.GroupId);
+            }
 
             User user = new User(id, blank.Surname, blank.Name, blank.Patronymic, blank.Login, passwordHash, roleType, groupId, false);
             
@@ -140,8 +145,7 @@ namespace API.Services.user
         {
             Guid id = Guid.Parse(blank.Id);
             int roleType = Int32.Parse(blank.RoleId);
-            Guid groupId = Guid.Parse(blank.GroupId);
-
+            
             User user = _userRepository.GetUserById(id);
 
             user.Surname = blank.Surname.Trim();
@@ -149,7 +153,12 @@ namespace API.Services.user
             user.Patronomic = blank.Patronymic?.Trim();
             user.Login = blank.Login.Trim();
             user.Roletype = roleType;
-            user.Groupid = groupId;
+
+            if (blank.RoleId == "3")
+            {
+                Guid groupId = Guid.Parse(blank.GroupId);
+                user.Groupid = groupId;
+            }
 
             if (blank.Password != null && !String.IsNullOrWhiteSpace(blank.Password))
             {
