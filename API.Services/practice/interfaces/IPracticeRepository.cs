@@ -9,4 +9,8 @@ public interface IPracticeRepository
     Practice GetPracticeById(Guid id);
     Practiceschedule GetPracticeSchedulesByPracticeId(Guid practiceId);
     Practicelog[] GetPracticeLogsByPracticescheduleId(Guid practiceScheduleId);
+    Practice[] GetAllPractices();
+    void AddPractice(Practice newPractice);
+    void EditPractice(Practice existsPractice);
+    void RemovePractice(string practiceId);
 }

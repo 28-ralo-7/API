@@ -2,7 +2,9 @@ using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
 using API.Services.adminPanel.interfaces;
+using API.Services.company.interfaces;
 using API.Services.group.interfaces;
+using API.Services.practice.interfaces;
 using API.Services.user.interfaces;
 
 namespace API.Services.adminPanel;
@@ -11,11 +13,15 @@ public class AdminPanelService: IAdminPanelService
 {
     private readonly IUserService _userService;
     private readonly IGroupService _groupService;
+    private readonly IPracticeService _practiceService;
+    private readonly ICompanyService _companyService;
 
-    public AdminPanelService(IUserService userService, IGroupService groupService)
+    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService)
     {
         _userService = userService;
         _groupService = groupService;
+        _practiceService = practiceService;
+        _companyService = companyService;
     }
 
     public UserDomain[] GetAllUsers()
@@ -47,6 +53,63 @@ public class AdminPanelService: IAdminPanelService
     public Response RemoveUser(string userId)
     {
         Response response = _userService.RemoveUser(userId);
+
+        return response;
+    }
+
+    public Item[] GetPractices()
+    {
+        return _practiceService.GetAllPractices();
+    }
+
+    public Item[] GetGroups()
+    {
+        return _groupService.GetAllGroup();
+    }
+
+    public Item[] GetCompanies()
+    {
+        return _companyService.GetAllCompany();
+    }
+
+    public Response SavePractice(Item practice)
+    {
+        Response response = _practiceService.SavePractice(practice);
+
+        return response;
+    }
+
+    public Response SaveGroup(Item group)
+    {
+        Response response = _groupService.SaveGroup(group);
+
+        return response;
+    }
+
+    public Response SaveCompany(Item company)
+    {
+        Response response = _companyService.SaveCompany(company);
+
+        return response;
+    }
+
+    public Response RemovePratice(string practiceId)
+    {
+        Response response = _practiceService.RemovePratice(practiceId);
+
+        return response;
+    }
+
+    public Response RemoveGroup(string groupId)
+    {
+        Response response = _groupService.RemoveGroup(groupId);
+
+        return response;
+    }
+
+    public Response RemoveCompany(string companyId)
+    {
+        Response response = _companyService.RemoveCompany(companyId);
 
         return response;
     }

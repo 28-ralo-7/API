@@ -35,9 +35,9 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<Company>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("company");
-
+                .ToTable("company")
+                .HasKey(u => u.Id);
+            
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Isremoved)
                 .HasDefaultValue(false)
@@ -48,10 +48,10 @@ public partial class PracticetrackerContext : DbContext
         });
 
         modelBuilder.Entity<Group>(entity =>
-        {
+        {            
             entity
-                .HasNoKey()
-                .ToTable("group");
+                .ToTable("group")
+                .HasKey(u => u.Id);
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Isremoved)
@@ -65,8 +65,8 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<Practice>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("practice");
+                .ToTable("practice")
+                .HasKey(u => u.Id);
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Isremoved)
@@ -80,9 +80,9 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<Practicelog>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("practicelog");
-
+                .ToTable("practicelog")
+                .HasKey(u => u.Id);
+            
             entity.Property(e => e.Companyid).HasColumnName("companyid");
             entity.Property(e => e.Contract)
                 .HasColumnType("character varying")
@@ -102,8 +102,8 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<Practiceschedule>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("practiceschedule");
+                .ToTable("practiceschedule")
+                .HasKey(u => u.Id);
 
             entity.Property(e => e.Dateend).HasColumnName("dateend");
             entity.Property(e => e.Datestart).HasColumnName("datestart");
@@ -149,8 +149,8 @@ public partial class PracticetrackerContext : DbContext
         modelBuilder.Entity<Role>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("role");
+                .ToTable("role")
+                .HasKey(u => u.Id);
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Type)

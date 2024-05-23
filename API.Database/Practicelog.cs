@@ -1,7 +1,10 @@
-﻿namespace API.Database;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Database;
 
 public partial class Practicelog
 {
+    [Key]
     public Guid Id { get; set; }
 
     public Guid Userid { get; set; }

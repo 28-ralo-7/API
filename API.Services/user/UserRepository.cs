@@ -53,7 +53,10 @@ namespace API.Services.user
 
         public void RemoveUser(User user)
         {
-            _context.Users.Remove(user);
+            User removedUser = _context.Users.First(u => u.Id == user.Id);
+            removedUser.Isremoved = true;
+
+            _context.Users.Update(removedUser);
             _context.SaveChanges();
         }
 

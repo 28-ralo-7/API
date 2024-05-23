@@ -86,4 +86,109 @@ public class AdminPanelController : BaseController
         
         return response;
     }
+
+    [Authorize(Roles = "1")]
+    [HttpGet]
+    public Response GetPractices()
+    {
+        Response response = new Response();
+        Item[] practices = _adminPanelService.GetPractices();
+
+        if (practices.Length == 0)
+        {
+            response.AddError("Практики отсутствуют");
+        }
+        else
+        {
+            response = new Response(practices);
+        }
+
+        return response;
+    }
+    
+    [Authorize(Roles = "1")]
+    [HttpGet]
+    public Response GetGroups()
+    {
+        Response response = new Response();
+        Item[] groups = _adminPanelService.GetGroups();
+
+        if (groups.Length == 0)
+        {
+            response.AddError("Группы отсутствуют");
+        }
+        else
+        {
+            response = new Response(groups);
+        }
+        
+        return response;
+    }
+
+    [Authorize(Roles = "1")]
+    [HttpGet]
+    public Response GetCompanies()
+    {
+        Response response = new Response();
+        Item[] companies = _adminPanelService.GetCompanies();
+
+        if (companies.Length == 0)
+        {
+            response.AddError("Компании отсутствуют");
+        }
+        else
+        {
+            response = new Response(companies);
+        }
+
+        return response;
+    }
+
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response SavePractice(Item practice)
+    {
+        Response response = _adminPanelService.SavePractice(practice);
+        
+        return response;
+    }
+
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response SaveGroup(Item group)
+    {
+        Response response = _adminPanelService.SaveGroup(group);
+        
+        return response;
+    }
+
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response SaveCompany(Item company)
+    {
+        Response response = _adminPanelService.SaveCompany(company);
+        
+        return response;
+    }
+    
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response RemovePratice(string practiceId)
+    {
+        return _adminPanelService.RemovePratice(practiceId);
+    }
+    
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response RemoveGroup(string groupId)
+    {
+        return _adminPanelService.RemoveGroup(groupId);
+    }
+    
+    [Authorize(Roles = "1")]
+    [HttpPost]
+    public Response RemoveCompany(string companyId)
+    {
+        return _adminPanelService.RemoveCompany(companyId);
+    }
 }
