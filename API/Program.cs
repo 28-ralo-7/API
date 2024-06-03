@@ -49,6 +49,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IPracticeLogService, PracticeLogService>();
+builder.Services.AddTransient<ICascadeGroupRemoveService, CascadeGroupRemoveService>();
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();

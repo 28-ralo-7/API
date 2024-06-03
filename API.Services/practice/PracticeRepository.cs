@@ -28,22 +28,44 @@ public class PracticeRepository : IPracticeRepository
             .ToArray();
     }
 
-    public Practice GetPracticeById(Guid id)
+    public Practice? GetPracticeById(Guid id)
     {
         return _context.Practices
-            .First(ps => ps.Id == id && ps.Isremoved != true && ps.Isremoved != true);
+            .FirstOrDefault(ps => ps.Id == id && ps.Isremoved != true && ps.Isremoved != true);
     }
 
-    public Practiceschedule GetPracticeSchedulesByPracticeId(Guid practiceId)
+    public Practiceschedule GetPracticeScheduleByPracticeId(Guid practiceId)
     {
         return _context.Practiceschedules
             .First(ps => ps.Practiceid == practiceId && !ps.Isremoved);
+    }
+    
+    public Practiceschedule[] GetPracticeSchedulesByPracticeId(Guid practiceId)
+    {
+        return _context.Practiceschedules
+            .Where(ps => ps.Practiceid == practiceId && !ps.Isremoved)
+            .ToArray();
     }
 
     public Practicelog[] GetPracticeLogsByPracticescheduleId(Guid practiceScheduleId)
     {
         return _context.Practicelogs
             .Where(log => log.Practicescheduleid == practiceScheduleId && log.Isremoved != true)
+            .ToArray();
+    }
+
+    public Practicelog[] GetPracticeLogsByPracticescheduleIds(Guid[] practiceScheduleIds)
+    {
+        return _context.Practicelogs
+            .Where(log => practiceScheduleIds.Contains(log.Practicescheduleid)
+                          && log.Isremoved != true)
+            .ToArray();
+    }
+
+    public Practicelog[] GetPracticeLogsByUserIds(Guid[] userIds)
+    {
+        return _context.Practicelogs
+            .Where(log => userIds.Contains(log.Userid))
             .ToArray();
     }
 
@@ -66,22 +88,35 @@ public class PracticeRepository : IPracticeRepository
         _context.SaveChanges();
     }
 
-    public void RemovePractice(string practiceId)
+    public void RemovePractice(Practice practice) //TODO: удалить файлы
     {
-        Guid id = Guid.Parse(practiceId);
-        Practice practice = _context.Practices.First(practice => practice.Id == id);
-        Practiceschedule[] practiceschedules = _context.Practiceschedules
-            .Where(ps => ps.Practiceid == practice.Id)
-            .ToArray();
-        Guid[] psIds = practiceschedules.Select(ps => ps.Id).ToArray();
-
-        Practicelog[] practicelogs = _context.Practicelogs
-            .Where(pl => psIds.Contains(pl.Id))
-            .ToArray();
-        
-        
-        practice.Isremoved = true;
         _context.Practices.Update(practice);
         _context.SaveChanges();
+    }
+
+    public void RemovePracticeSchedules(Practiceschedule[] schedules)
+    {
+        _context.Practiceschedules.UpdateRange(schedules);
+        _context.SaveChanges();
+    }
+
+    public void RemovePracticeLogs(Practicelog[] logs)
+    {
+        _context.Practicelogs.UpdateRange(logs);
+        _context.SaveChanges();
+    }
+
+    public Practiceschedule[] GetPracticeSchedulesByGroupId(Guid groupId)
+    {
+        return _context.Practiceschedules
+            .Where(ps => ps.Groupid == groupId)
+            .ToArray();
+    }
+
+    public Practiceschedule[] GetAllPracticeSchedules()
+    {
+        return _context.Practiceschedules
+            .Where(ps => ps.Isremoved != true)
+            .ToArray();
     }
 }

@@ -1,7 +1,5 @@
-using API.Domain.practice;
 using API.Domain.practice.domain;
 using API.Domain.practice.view;
-using API.Domain.shared;
 using API.Domain.tools;
 using API.Services.practice.interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +12,12 @@ namespace API.Controllers;
 public class PracticeController : BaseController
 {
     private readonly IPracticeService _practiceService;
+    private readonly IPracticeLogService _practiceLogService;
 
-    public PracticeController(IPracticeService practiceService)
+    public PracticeController(IPracticeService practiceService, IPracticeLogService practiceLogService)
     {
         _practiceService = practiceService;
+        _practiceLogService = practiceLogService;
     } 
 
     [Authorize(Roles = "2")]
@@ -25,7 +25,7 @@ public class PracticeController : BaseController
     public Response GetPracticeLogByPracticeId(string practiceId)
     {
         Response response = new Response();
-        PracticeLogDomain? practiceLogDomain = _practiceService.GetPracticeLogByPracticeId(practiceId);
+        PracticeLogDomain? practiceLogDomain = _practiceLogService.GetPracticeLogByPracticeId(practiceId);
 
         PracticeLogView practiceLogView = new PracticeLogView(practiceLogDomain);
         

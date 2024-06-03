@@ -4,16 +4,20 @@ using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
 using API.Services.group.interfaces;
+using API.Services.practice.interfaces;
+using API.Services.user.interfaces;
 
 namespace API.Services.group;
 
 public class GroupService : IGroupService
 {
     private readonly IGroupRepository _groupRepository;
+    private readonly IPracticeService _practiceService;
 
-    public GroupService(IGroupRepository groupRepository)
+    public GroupService(IGroupRepository groupRepository, IPracticeService practiceService)
     {
         _groupRepository = groupRepository;
+        _practiceService = practiceService;
     }
     public GroupDomain GetGroupById(Guid? groupId)
     {
@@ -24,6 +28,17 @@ public class GroupService : IGroupService
 
         return groupDomain;
 
+    }
+
+    public GroupDomain[] GetGroupByIds(Guid[] groupIds)
+    {
+        Group[] groups = _groupRepository.GetGroupByIds(groupIds);
+
+        GroupDomain[] groupDomains = groups
+            .Select(group => new GroupDomain(group))
+            .ToArray();
+
+        return groupDomains;
     }
 
     public GroupDomain[] GetGroupsByPermission(UserDomain systemUser)
@@ -67,7 +82,15 @@ public class GroupService : IGroupService
         }
         else
         {
-            if (String.IsNullOrWhiteSpace(group.Value))
+            Guid id = group.Value.Length > 0 ? Guid.Parse(group.Value) : new Guid();
+
+            Group? existsGroup = _groupRepository.GetAllGroup().FirstOrDefault(x => x.Name.Trim() == group.Label.Trim());
+            
+            if (id != existsGroup?.Id && existsGroup?.Name.Trim() == group.Label.Trim())
+            {
+                response.AddError("Такая группа уже есть");
+            }
+            else if (String.IsNullOrWhiteSpace(group.Value))
             {
                 AddGroup(group);
             }
@@ -78,11 +101,6 @@ public class GroupService : IGroupService
         }
 
         return response;
-    }
-
-    public Response RemoveGroup(string groupId)
-    {
-        throw new NotImplementedException();
     }
 
     private void AddGroup(Item group)

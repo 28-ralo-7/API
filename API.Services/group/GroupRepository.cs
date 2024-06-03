@@ -14,7 +14,14 @@ public class GroupRepository : IGroupRepository
 
     public Group GetGroupById(Guid? groupId)
     {
-        return _context.Groups.First(group => group.Id == groupId && !group.Isremoved);
+        return _context.Groups.FirstOrDefault(group => group.Id == groupId && !group.Isremoved);
+    }
+
+    public Group[] GetGroupByIds(Guid[] groupIds)
+    {
+        return _context.Groups
+            .Where(group => groupIds.Contains(group.Id) && !group.Isremoved)
+            .ToArray();
     }
 
     public Group[] GetGroupByUserId(Guid? practiceLeadId)
@@ -53,6 +60,12 @@ public class GroupRepository : IGroupRepository
     public void AddGroup(Group newGroup)
     {
         _context.Groups.Add(newGroup);
+        _context.SaveChanges();;
+    }
+
+    public void RemoveGroup(Group group)
+    {
+        _context.Groups.Update(group);
         _context.SaveChanges();;
     }
 }

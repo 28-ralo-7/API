@@ -16,8 +16,11 @@ namespace API.Services.user.Interfaces
         Database.Role GetRole(int id);
         Database.Role[] GetAllRoles(bool isRemoved = false);
         void RemoveUser(User user);
+        void RemoveUsers(User[] users);
+        User[] GetUsersByGroupId(Guid groupId);
 
         void EditUser(User user);
         void AddUser(User user);
+        User[] GetPracticeLeads();
     }
 }

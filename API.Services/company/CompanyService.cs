@@ -45,7 +45,14 @@ public class CompanyService : ICompanyService
         }
         else
         {
-            if (String.IsNullOrWhiteSpace(company.Value))
+            Guid id = company.Value.Length > 0 ? Guid.Parse(company.Value) : new Guid();
+            Company? existsСompany = _companyRepository.GetAllCompany().FirstOrDefault(x => x.Name.Trim() == company.Label.Trim());
+            
+            if (id != existsСompany?.Id && existsСompany?.Name.Trim() == company.Label.Trim())
+            {
+                response.AddError("Такая компания уже есть");
+            }
+            else if (String.IsNullOrWhiteSpace(company.Value))
             {
                 AddCompany(company);
             }
@@ -60,7 +67,12 @@ public class CompanyService : ICompanyService
 
     public Response RemoveCompany(string companyId)
     {
-        throw new NotImplementedException();
+        Guid id = Guid.Parse(companyId);
+        Company company = _companyRepository.GetCompanyById(id);
+        
+        _companyRepository.RemoveCompany(company);
+
+        return new Response();
     }
 
     private void AddCompany(Item company)

@@ -1,3 +1,5 @@
+using API.Domain.adminPanel;
+using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
@@ -13,15 +15,19 @@ public class AdminPanelService: IAdminPanelService
 {
     private readonly IUserService _userService;
     private readonly IGroupService _groupService;
+    private readonly ICascadeGroupRemoveService _cascadeGroupRemoveService;
     private readonly IPracticeService _practiceService;
     private readonly ICompanyService _companyService;
+    private readonly IPracticeLogService _practiceLogService;
 
-    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService)
+    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService, ICascadeGroupRemoveService cascadeGroupRemoveService, IPracticeLogService practiceLogService)
     {
         _userService = userService;
         _groupService = groupService;
         _practiceService = practiceService;
         _companyService = companyService;
+        _cascadeGroupRemoveService = cascadeGroupRemoveService;
+        _practiceLogService = practiceLogService;
     }
 
     public UserDomain[] GetAllUsers()
@@ -93,16 +99,16 @@ public class AdminPanelService: IAdminPanelService
         return response;
     }
 
-    public Response RemovePratice(string practiceId)
+    public Response RemovePractice(string practiceId)
     {
-        Response response = _practiceService.RemovePratice(practiceId);
+        Response response = _practiceService.RemovePractice(practiceId);
 
         return response;
     }
 
     public Response RemoveGroup(string groupId)
     {
-        Response response = _groupService.RemoveGroup(groupId);
+        Response response = _cascadeGroupRemoveService.RemoveGroup(groupId);
 
         return response;
     }
@@ -112,5 +118,24 @@ public class AdminPanelService: IAdminPanelService
         Response response = _companyService.RemoveCompany(companyId);
 
         return response;
+    }
+
+    public PracticeScheduleDomain[] GetPracticeSchedules()
+    {
+        PracticeScheduleDomain[] schedules = _practiceLogService.GetPracticeSchedules();
+
+        return schedules;
+    }
+
+    public PracticeScheduleSettingsOptions GetOptionsForPracticeSchedule()
+    {
+        Item[] practiceOptions = _practiceService.GetAllPractices();
+        Item[] practiceLeadOptions = _userService.GetAllPracticeLeadOptions();
+        Item[] groupOptions = _groupService.GetGroupOptions();
+
+        PracticeScheduleSettingsOptions options =
+            new PracticeScheduleSettingsOptions(practiceOptions, practiceLeadOptions, groupOptions);
+
+        return options;
     }
 }

@@ -53,11 +53,21 @@ namespace API.Services.user
 
         public void RemoveUser(User user)
         {
-            User removedUser = _context.Users.First(u => u.Id == user.Id);
-            removedUser.Isremoved = true;
-
-            _context.Users.Update(removedUser);
+            _context.Users.Update(user);
             _context.SaveChanges();
+        }
+
+        public void RemoveUsers(User[] users)
+        {
+            _context.Users.UpdateRange(users);
+            _context.SaveChanges();
+        }
+
+        public User[] GetUsersByGroupId(Guid groupId)
+        {
+            return _context.Users
+                .Where(user => user.Groupid == groupId)
+                .ToArray();
         }
 
         public void EditUser(User user)
@@ -70,6 +80,12 @@ namespace API.Services.user
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+        }
+
+        public User[] GetPracticeLeads()
+        {
+            return _context.Users.Where(user => user.Roletype == 2)
+                .ToArray();
         }
     }
 }

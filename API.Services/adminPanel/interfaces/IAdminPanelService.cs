@@ -1,3 +1,5 @@
+using API.Domain.adminPanel;
+using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
@@ -16,7 +18,9 @@ public interface IAdminPanelService
     Response SavePractice(Item practice);
     Response SaveGroup(Item group);
     Response SaveCompany(Item company);
-    Response RemovePratice(string practiceId);
+    Response RemovePractice(string practiceId);
     Response RemoveGroup(string groupId);
     Response RemoveCompany(string companyId);
+    PracticeScheduleDomain[] GetPracticeSchedules();
+    PracticeScheduleSettingsOptions GetOptionsForPracticeSchedule();
 }

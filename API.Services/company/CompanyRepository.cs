@@ -26,10 +26,10 @@ public class CompanyRepository : ICompanyRepository
             .ToArray();
     }
 
-    public Company GetCompanyById(Guid id)
+    public Company? GetCompanyById(Guid id)
     {
         return _context.Companies
-            .First(company => company.Id == id && company.Isremoved != true);
+            .FirstOrDefault(company => company.Id == id && company.Isremoved != true);
     }
 
     public void AddCompany(Company newCompany)
@@ -41,6 +41,12 @@ public class CompanyRepository : ICompanyRepository
     public void EditCompany(Company existsCompany)
     {
         _context.Companies.Update(existsCompany);
+        _context.SaveChanges();
+    }
+
+    public void RemoveCompany(Company company)
+    {
+        _context.Companies.Update(company);
         _context.SaveChanges();
     }
 }

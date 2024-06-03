@@ -9,8 +9,9 @@ namespace API.Services.practice.interfaces;
 public interface IPracticeService
 {
     Item[] GetPracticeItemsByPermissions(UserDomain systemUser);
-    PracticeLogDomain GetPracticeLogByPracticeId(string practiceId);
+    void RemovePracticeLogsByUserIds(Guid[] userIds);
     Item[] GetAllPractices();
     Response SavePractice(Item practice);
-    Response RemovePratice(string practiceId);
+    Response RemovePractice(string practiceId);
+    void RemovePracticeSchedulesByGroupId(Guid groupId);
 }

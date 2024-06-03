@@ -10,7 +10,9 @@ namespace API.Services.user.interfaces
         UserDomain[] GetUsersByIds(Guid[] ids);
         UserDomain[] GetAllUsers();
         Item[] GetRoleOptions();
+        Item[] GetAllPracticeLeadOptions();
         Response SaveUser(UserBlank blank);
         Response RemoveUser(string userId);
+        Response RemoveUsersByGroup(Guid groupId);
     }
 }

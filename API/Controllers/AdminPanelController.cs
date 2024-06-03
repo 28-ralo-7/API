@@ -1,4 +1,6 @@
 using API.Domain.adminPanel;
+using API.Domain.practice.domain;
+using API.Domain.practice.view;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
@@ -56,6 +58,34 @@ public class AdminPanelController : BaseController
         if (options.RoleOptions.Length == 0)
         {
             response.AddError("Роли отсутствуют");
+        }
+        else if (options.GroupOptions.Length == 0)
+        {
+            response.AddError("Группы отсутствуют");
+        }
+        else
+        {
+            response = new Response(options);
+        }
+
+        return response;
+    }
+
+    [Authorize(Roles = "1")]
+    [HttpGet]
+    public Response GetOptionsForPracticeSchedule()
+    {
+        Response response = new Response();
+
+        PracticeScheduleSettingsOptions options = _adminPanelService.GetOptionsForPracticeSchedule();
+
+        if (options.PracticeOptions.Length == 0)
+        {
+            response.AddError("Практики отсутствуют");
+        }
+        else if (options.PracticeLeadOptions.Length == 0)
+        {
+            response.AddError("Руководители отсутствуют");
         }
         else if (options.GroupOptions.Length == 0)
         {
@@ -143,6 +173,28 @@ public class AdminPanelController : BaseController
 
         return response;
     }
+    
+    [Authorize(Roles = "1")]
+    [HttpGet]
+    public Response GetPracticeSchedules()
+    {
+        Response response = new Response();
+        PracticeScheduleDomain[] schedules = _adminPanelService.GetPracticeSchedules();
+
+        if (schedules.Length == 0)
+        {
+            response.AddError("Расписание практик отсутствуют");
+        }
+        else
+        {
+            PracticeScheduleView[] scheduleViews = schedules
+                .Select(domain => new PracticeScheduleView(domain))
+                .ToArray();
+            response = new Response(scheduleViews);
+        }
+
+        return response;
+    }
 
     [Authorize(Roles = "1")]
     [HttpPost]
@@ -173,9 +225,9 @@ public class AdminPanelController : BaseController
     
     [Authorize(Roles = "1")]
     [HttpPost]
-    public Response RemovePratice(string practiceId)
+    public Response RemovePractice(string practiceId)
     {
-        return _adminPanelService.RemovePratice(practiceId);
+        return _adminPanelService.RemovePractice(practiceId);
     }
     
     [Authorize(Roles = "1")]

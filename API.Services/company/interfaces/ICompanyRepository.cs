@@ -9,4 +9,5 @@ public interface ICompanyRepository
     void AddCompany(Company newCompany);
     Company GetCompanyById(Guid id);
     void EditCompany(Company existsCompany);
+    void RemoveCompany(Company company);
 }
