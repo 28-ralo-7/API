@@ -2322,39 +2322,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ДИ\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\dkoze\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ДИ\\Desktop\\API\\API.Domain\\API.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\dkoze\\API\\API.Domain\\API.Domain.csproj",
       "projectName": "API.Domain",
-      "projectPath": "C:\\Users\\ДИ\\Desktop\\API\\API.Domain\\API.Domain.csproj",
-      "packagesPath": "C:\\Users\\ДИ\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ДИ\\Desktop\\API\\API.Domain\\obj\\",
+      "projectPath": "C:\\Users\\dkoze\\API\\API.Domain\\API.Domain.csproj",
+      "packagesPath": "C:\\Users\\dkoze\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dkoze\\API\\API.Domain\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ДИ\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\dkoze\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\ДИ\\Desktop\\API\\API.Database\\API.Database.csproj": {
-              "projectPath": "C:\\Users\\ДИ\\Desktop\\API\\API.Database\\API.Database.csproj"
+            "C:\\Users\\dkoze\\API\\API.Database\\API.Database.csproj": {
+              "projectPath": "C:\\Users\\dkoze\\API\\API.Database\\API.Database.csproj"
             }
           }
         }
@@ -2363,11 +2356,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2411,7 +2399,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\dkoze\\.dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

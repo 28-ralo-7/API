@@ -36,11 +36,11 @@ public class PracticeScheduleDomain
 
         for (int i = 0; i < pss.Length; i++)
         {
-            Practice practice = practices.First(x => x.Id == pss[0].Practiceid);
-            GroupDomain group = groups.First(x => x.Id == pss[0].Groupid);
-            UserDomain user = users.First(x => x.Id == pss[0].Practiceleadid);
+            Practice practice = practices.First(x => x.Id == pss[i].Practiceid);
+            GroupDomain group = groups.First(x => x.Id == pss[i].Groupid);
+            UserDomain user = users.First(x => x.Id == pss[i].Practiceleadid);
             
-            practiceScheduleDomains.Add(new PracticeScheduleDomain(pss[0], practice, group, user));
+            practiceScheduleDomains.Add(new PracticeScheduleDomain(pss[i], practice, group, user));
         }
 
         return practiceScheduleDomains;

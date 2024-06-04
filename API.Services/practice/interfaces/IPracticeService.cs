@@ -1,4 +1,5 @@
 using API.Domain.practice;
+using API.Domain.practice.blank;
 using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
@@ -14,4 +15,6 @@ public interface IPracticeService
     Response SavePractice(Item practice);
     Response RemovePractice(string practiceId);
     void RemovePracticeSchedulesByGroupId(Guid groupId);
+    Response SaveSchedule(PracticeScheduleBlank blank);
+    Response RemoveSchedule(string scheduleId);
 }

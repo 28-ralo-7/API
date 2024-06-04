@@ -1,4 +1,5 @@
 using API.Domain.adminPanel;
+using API.Domain.practice.blank;
 using API.Domain.practice.domain;
 using API.Domain.practice.view;
 using API.Domain.shared;
@@ -14,233 +15,249 @@ namespace API.Controllers;
 [Route("[controller]/[action]")]
 public class AdminPanelController : BaseController
 {
-    private readonly IAdminPanelService _adminPanelService;
+	private readonly IAdminPanelService _adminPanelService;
 
-    public AdminPanelController(IAdminPanelService adminPanelService)
-    {
-        _adminPanelService = adminPanelService;
-    }
+	public AdminPanelController(IAdminPanelService adminPanelService)
+	{
+		_adminPanelService = adminPanelService;
+	}
 
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetAllUsers()
-    {
-        Response response = new Response();
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetAllUsers()
+	{
+		Response response = new Response();
 
-        UserDomain[] userDomains = _adminPanelService.GetAllUsers();
-        UserSettingView[] userSettingViews = userDomains
-            .Select(domain => new UserSettingView(domain))
-            .OrderBy(user => user.Group?.Value)
-            .ThenBy(user => user.FullName)
-            .ToArray();
+		UserDomain[] userDomains = _adminPanelService.GetAllUsers();
+		UserSettingView[] userSettingViews = userDomains
+			.Select(domain => new UserSettingView(domain))
+			.OrderBy(user => user.Group?.Value)
+			.ThenBy(user => user.FullName)
+			.ToArray();
 
-        if (userSettingViews.Length == 0)
-        {
-            response.AddError("Пользователи отсутствуют");
-        }
-        else
-        {
-            response = new Response(userSettingViews);
-        }
+		if (userSettingViews.Length == 0)
+		{
+			response.AddError("Пользователи отсутствуют");
+		}
+		else
+		{
+			response = new Response(userSettingViews);
+		}
 
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetOptionsUserSetting()
-    {
-        Response response = new Response();
+		return response;
+	}
 
-        (Item[], Item[]) optionTuple = _adminPanelService.GetOptionsUserSetting();
-        UserSettingOptions options = new UserSettingOptions(optionTuple.Item1, optionTuple.Item2);
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetOptionsUserSetting()
+	{
+		Response response = new Response();
 
-        if (options.RoleOptions.Length == 0)
-        {
-            response.AddError("Роли отсутствуют");
-        }
-        else if (options.GroupOptions.Length == 0)
-        {
-            response.AddError("Группы отсутствуют");
-        }
-        else
-        {
-            response = new Response(options);
-        }
+		(Item[], Item[]) optionTuple = _adminPanelService.GetOptionsUserSetting();
+		UserSettingOptions options = new UserSettingOptions(optionTuple.Item1, optionTuple.Item2);
 
-        return response;
-    }
+		if (options.RoleOptions.Length == 0)
+		{
+			response.AddError("Роли отсутствуют");
+		}
+		else if (options.GroupOptions.Length == 0)
+		{
+			response.AddError("Группы отсутствуют");
+		}
+		else
+		{
+			response = new Response(options);
+		}
 
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetOptionsForPracticeSchedule()
-    {
-        Response response = new Response();
+		return response;
+	}
 
-        PracticeScheduleSettingsOptions options = _adminPanelService.GetOptionsForPracticeSchedule();
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetOptionsForPracticeSchedule()
+	{
+		Response response = new Response();
 
-        if (options.PracticeOptions.Length == 0)
-        {
-            response.AddError("Практики отсутствуют");
-        }
-        else if (options.PracticeLeadOptions.Length == 0)
-        {
-            response.AddError("Руководители отсутствуют");
-        }
-        else if (options.GroupOptions.Length == 0)
-        {
-            response.AddError("Группы отсутствуют");
-        }
-        else
-        {
-            response = new Response(options);
-        }
+		PracticeScheduleSettingsOptions options = _adminPanelService.GetOptionsForPracticeSchedule();
 
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response SaveUser(UserBlank blank)
-    {
-        Response response = _adminPanelService.SaveUser(blank);
-        
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response RemoveUser(string userId)
-    {
-        Response response = _adminPanelService.RemoveUser(userId);
-        
-        return response;
-    }
+		if (options.PracticeOptions.Length == 0)
+		{
+			response.AddError("Практики отсутствуют");
+		}
+		else if (options.PracticeLeadOptions.Length == 0)
+		{
+			response.AddError("Руководители отсутствуют");
+		}
+		else if (options.GroupOptions.Length == 0)
+		{
+			response.AddError("Группы отсутствуют");
+		}
+		else
+		{
+			response = new Response(options);
+		}
 
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetPractices()
-    {
-        Response response = new Response();
-        Item[] practices = _adminPanelService.GetPractices();
+		return response;
+	}
 
-        if (practices.Length == 0)
-        {
-            response.AddError("Практики отсутствуют");
-        }
-        else
-        {
-            response = new Response(practices);
-        }
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response SaveUser(UserBlank blank)
+	{
+		Response response = _adminPanelService.SaveUser(blank);
+		
+		return response;
+	}
 
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetGroups()
-    {
-        Response response = new Response();
-        Item[] groups = _adminPanelService.GetGroups();
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response RemoveUser(string userId)
+	{
+		Response response = _adminPanelService.RemoveUser(userId);
+		
+		return response;
+	}
 
-        if (groups.Length == 0)
-        {
-            response.AddError("Группы отсутствуют");
-        }
-        else
-        {
-            response = new Response(groups);
-        }
-        
-        return response;
-    }
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetPractices()
+	{
+		Response response = new Response();
+		Item[] practices = _adminPanelService.GetPractices();
 
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetCompanies()
-    {
-        Response response = new Response();
-        Item[] companies = _adminPanelService.GetCompanies();
+		if (practices.Length == 0)
+		{
+			response.AddError("Практики отсутствуют");
+		}
+		else
+		{
+			response = new Response(practices);
+		}
 
-        if (companies.Length == 0)
-        {
-            response.AddError("Компании отсутствуют");
-        }
-        else
-        {
-            response = new Response(companies);
-        }
+		return response;
+	}
+	
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetGroups()
+	{
+		Response response = new Response();
+		Item[] groups = _adminPanelService.GetGroups();
 
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpGet]
-    public Response GetPracticeSchedules()
-    {
-        Response response = new Response();
-        PracticeScheduleDomain[] schedules = _adminPanelService.GetPracticeSchedules();
+		if (groups.Length == 0)
+		{
+			response.AddError("Группы отсутствуют");
+		}
+		else
+		{
+			response = new Response(groups);
+		}
+		
+		return response;
+	}
 
-        if (schedules.Length == 0)
-        {
-            response.AddError("Расписание практик отсутствуют");
-        }
-        else
-        {
-            PracticeScheduleView[] scheduleViews = schedules
-                .Select(domain => new PracticeScheduleView(domain))
-                .ToArray();
-            response = new Response(scheduleViews);
-        }
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetCompanies()
+	{
+		Response response = new Response();
+		Item[] companies = _adminPanelService.GetCompanies();
 
-        return response;
-    }
+		if (companies.Length == 0)
+		{
+			response.AddError("Компании отсутствуют");
+		}
+		else
+		{
+			response = new Response(companies);
+		}
 
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response SavePractice(Item practice)
-    {
-        Response response = _adminPanelService.SavePractice(practice);
-        
-        return response;
-    }
+		return response;
+	}
 
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response SaveGroup(Item group)
-    {
-        Response response = _adminPanelService.SaveGroup(group);
-        
-        return response;
-    }
+	[Authorize(Roles = "1")]
+	[HttpGet]
+	public Response GetPracticeSchedules()
+	{
+		Response response = new Response();
+		PracticeScheduleDomain[] schedules = _adminPanelService.GetPracticeSchedules();
 
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response SaveCompany(Item company)
-    {
-        Response response = _adminPanelService.SaveCompany(company);
-        
-        return response;
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response RemovePractice(string practiceId)
-    {
-        return _adminPanelService.RemovePractice(practiceId);
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response RemoveGroup(string groupId)
-    {
-        return _adminPanelService.RemoveGroup(groupId);
-    }
-    
-    [Authorize(Roles = "1")]
-    [HttpPost]
-    public Response RemoveCompany(string companyId)
-    {
-        return _adminPanelService.RemoveCompany(companyId);
-    }
+		if (schedules.Length == 0)
+		{
+			response.AddError("Расписание практик отсутствуют");
+		}
+		else
+		{
+			PracticeScheduleView[] scheduleViews = schedules
+				.Select(domain => new PracticeScheduleView(domain))
+				.ToArray();
+			response = new Response(scheduleViews);
+		}
+
+		return response;
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response SavePractice(Item practice)
+	{
+		Response response = _adminPanelService.SavePractice(practice);
+		
+		return response;
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response SaveGroup(Item group)
+	{
+		Response response = _adminPanelService.SaveGroup(group);
+		
+		return response;
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response SaveCompany(Item company)
+	{
+		Response response = _adminPanelService.SaveCompany(company);
+		
+		return response;
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response RemovePractice(string practiceId)
+	{
+		return _adminPanelService.RemovePractice(practiceId);
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response RemoveGroup(string groupId)
+	{
+		return _adminPanelService.RemoveGroup(groupId);
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response RemoveCompany(string companyId)
+	{
+		return _adminPanelService.RemoveCompany(companyId);
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response RemoveSchedule(string scheduleId)
+	{
+		return _adminPanelService.RemoveSchedule(scheduleId);
+	}
+
+	[Authorize(Roles = "1")]
+	[HttpPost]
+	public Response SaveSchedule(PracticeScheduleBlank blank)
+	{
+		Response response = _adminPanelService.SaveSchedule(blank);
+
+		return response;
+	}
 }

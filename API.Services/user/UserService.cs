@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using API.Database;
 using API.Services.user.interfaces;
 using API.Services.user.Interfaces;
 using API.Domain.group;
@@ -71,7 +72,7 @@ namespace API.Services.user
                 GroupDomain? groupDomain = _groupService.GetGroupById(user.Groupid);
                 Database.Role role = _userRepository.GetRole(user.Roletype);
                 UserDomain userDomain = new UserDomain(user, groupDomain,role );
-                
+
                 userDomains.Add(userDomain);
             }
 

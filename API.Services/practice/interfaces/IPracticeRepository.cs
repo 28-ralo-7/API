@@ -20,4 +20,8 @@ public interface IPracticeRepository
     void RemovePracticeLogs(Practicelog[] logs);
     Practiceschedule[] GetPracticeSchedulesByGroupId(Guid groupId);
     Practiceschedule[] GetAllPracticeSchedules();
+    void AddSchedule(Practiceschedule newSchedule);
+    Practiceschedule GetPracticeScheduleById(Guid id);
+    void EditPracticeSchedule(Practiceschedule practiceschedule);
+    void RemovePracticeSchedule(Practiceschedule schedule);
 }

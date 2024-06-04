@@ -10,6 +10,7 @@ using API.Services.group;
 using API.Services.group.interfaces;
 using API.Services.practice;
 using API.Services.practice.interfaces;
+using API.Services.practice.validate;
 using API.Services.user;
 using API.Services.user.interfaces;
 using API.Services.user.Interfaces;
@@ -66,6 +67,7 @@ builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 
 builder.Services.AddTransient<IAdminPanelService, AdminPanelService>();
 builder.Services.AddTransient<VUserService>();
+builder.Services.AddTransient<VScheduleService>();
 
 builder.Services.AddTransient<PracticetrackerContext>();
 

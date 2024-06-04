@@ -1,4 +1,5 @@
 using API.Domain.adminPanel;
+using API.Domain.practice.blank;
 using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
@@ -137,5 +138,19 @@ public class AdminPanelService: IAdminPanelService
             new PracticeScheduleSettingsOptions(practiceOptions, practiceLeadOptions, groupOptions);
 
         return options;
+    }
+
+    public Response SaveSchedule(PracticeScheduleBlank blank)
+    {
+        Response response = _practiceService.SaveSchedule(blank);
+
+        return response;
+    }
+
+    public Response RemoveSchedule(string scheduleId)
+    {
+        Response response = _practiceService.RemoveSchedule(scheduleId);
+
+        return response;
     }
 }

@@ -62,7 +62,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task LogOn()
+        public async Task LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
