@@ -69,6 +69,10 @@ namespace API.Services.user
 
             foreach (User user in users)
             {
+                if (userDomains.Count == 42)
+                {
+                    var a = 2;
+                }
                 GroupDomain? groupDomain = _groupService.GetGroupById(user.Groupid);
                 Database.Role role = _userRepository.GetRole(user.Roletype);
                 UserDomain userDomain = new UserDomain(user, groupDomain,role );
@@ -155,6 +159,11 @@ namespace API.Services.user
             _userRepository.RemoveUsers(users);
 
             return new Response();
+        }
+
+        public User[] GetStudentsByGroupId(Guid groupId)
+        {
+            return _userRepository.GetUsersByGroupId(groupId);
         }
 
         private void AddUser(UserBlank blank)

@@ -15,6 +15,6 @@ public interface IPracticeService
     Response SavePractice(Item practice);
     Response RemovePractice(string practiceId);
     void RemovePracticeSchedulesByGroupId(Guid groupId);
-    Response SaveSchedule(PracticeScheduleBlank blank);
     Response RemoveSchedule(string scheduleId);
+    Item[] GetCompanies();
 }

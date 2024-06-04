@@ -37,7 +37,7 @@ namespace API.Services.user
         public User[] GetAllUsers(bool isRemoved = false)
         {
             return _context.Users
-                .Where(user => user.Isremoved != true)
+                .Where(user => user.Isremoved == isRemoved)
                 .ToArray();
         }
 

@@ -22,7 +22,15 @@ public class VScheduleService
 
 		Practiceschedule[] practiceschedules = _practiceRepository.GetAllPracticeSchedules();
 		Guid? blankId = blank.Id != null ? Guid.Parse(blank.Id) : new Guid();
+		Guid groupId = Guid.Parse(blank.GroupId);
+		
+		Practiceschedule? practiceschedule = practiceschedules.FirstOrDefault(ps => ps.Id == blankId);
 
+		if (practiceschedule != null && practiceschedule.Groupid != groupId)
+		{
+			errors.Add("Нельзя менять группу для расписания практики");
+		}
+		
 		if (dateStart > dateEnd)
 		{
 			errors.Add("Дата начала не может быть больше даты окончания");

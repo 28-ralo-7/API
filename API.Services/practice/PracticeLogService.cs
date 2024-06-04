@@ -58,7 +58,6 @@ public class PracticeLogService : IPracticeLogService
 
     }
 
-
     public PracticeScheduleDomain[] GetPracticeSchedules()
     {
         Practiceschedule[] practiceschedules = _practiceRepository.GetAllPracticeSchedules();

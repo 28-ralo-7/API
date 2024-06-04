@@ -138,6 +138,12 @@ public class PracticeRepository : IPracticeRepository
 		_context.SaveChanges();
 	}
 
+	public void AddPracticeLogs(Practicelog[] logs)
+	{
+		_context.Practicelogs.AddRange(logs);
+		_context.SaveChanges();
+	}
+
 	public Practiceschedule GetPracticeScheduleById(Guid id)
 	{
 		return _context.Practiceschedules

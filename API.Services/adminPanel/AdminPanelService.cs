@@ -20,8 +20,9 @@ public class AdminPanelService: IAdminPanelService
     private readonly IPracticeService _practiceService;
     private readonly ICompanyService _companyService;
     private readonly IPracticeLogService _practiceLogService;
+    private readonly ISavePracticeScheduleService _practiceScheduleService;
 
-    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService, ICascadeGroupRemoveService cascadeGroupRemoveService, IPracticeLogService practiceLogService)
+    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService, ICascadeGroupRemoveService cascadeGroupRemoveService, IPracticeLogService practiceLogService, ISavePracticeScheduleService practiceScheduleService)
     {
         _userService = userService;
         _groupService = groupService;
@@ -29,6 +30,7 @@ public class AdminPanelService: IAdminPanelService
         _companyService = companyService;
         _cascadeGroupRemoveService = cascadeGroupRemoveService;
         _practiceLogService = practiceLogService;
+        _practiceScheduleService = practiceScheduleService;
     }
 
     public UserDomain[] GetAllUsers()
@@ -142,7 +144,7 @@ public class AdminPanelService: IAdminPanelService
 
     public Response SaveSchedule(PracticeScheduleBlank blank)
     {
-        Response response = _practiceService.SaveSchedule(blank);
+        Response response = _practiceScheduleService.SaveSchedule(blank);
 
         return response;
     }

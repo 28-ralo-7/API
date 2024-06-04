@@ -1,5 +1,6 @@
 using API.Domain.practice.domain;
 using API.Domain.practice.view;
+using API.Domain.shared;
 using API.Domain.tools;
 using API.Services.practice.interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +44,25 @@ public class PracticeController : BaseController
             response = new Response(practiceLogView);
         }
         
+        return response;
+    }
+    
+    [Authorize(Roles = "2")]
+    [HttpGet]
+    public Response GetCompanies()
+    {
+        Response response = new Response();
+        Item[] companies = _practiceService.GetCompanies();
+
+        if (companies.Length == 0)
+        {
+            response.AddError("Компании отсутствуют");
+        }
+        else
+        {
+            response = new Response(companies);
+        }
+
         return response;
     }
 }

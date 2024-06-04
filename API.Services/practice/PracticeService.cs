@@ -1,9 +1,8 @@
 using API.Database;
-using API.Domain.practice.blank;
-using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
+using API.Services.company.interfaces;
 using API.Services.practice.interfaces;
 using API.Services.practice.validate;
 
@@ -12,12 +11,14 @@ namespace API.Services.practice;
 public class PracticeService : IPracticeService
 {
 	private readonly IPracticeRepository _practiceRepository;
+	private readonly ICompanyService _companyService;
 	private readonly VScheduleService _vScheduleService;
 
-	public PracticeService(IPracticeRepository practiceRepository, VScheduleService vScheduleService)
+	public PracticeService(IPracticeRepository practiceRepository, VScheduleService vScheduleService, ICompanyService companyService)
 	{
 		_practiceRepository = practiceRepository;
 		_vScheduleService = vScheduleService;
+		_companyService = companyService;
 	}
 
 	public Item[] GetPracticeItemsByPermissions(UserDomain systemUser)
@@ -110,6 +111,7 @@ public class PracticeService : IPracticeService
 		}
 		
 		practice.Isremoved = true;
+
 		_practiceRepository.RemovePractice(practice);
 		_practiceRepository.RemovePracticeSchedules(practiceschedules);
 		_practiceRepository.RemovePracticeLogs(practicelogs);
@@ -127,30 +129,6 @@ public class PracticeService : IPracticeService
 		}
 		
 		_practiceRepository.RemovePracticeSchedules(practiceschedules);
-	}
-
-	public Response SaveSchedule(PracticeScheduleBlank blank)
-	{
-		Response response = new Response();
-		List<string> errors = _vScheduleService.ValidateScheduleBlank(blank);
-
-		if (errors.Count != 0)
-		{
-			response.AddErrors(errors);
-		}
-		else
-		{
-			if (blank.Id == null)
-			{
-				AddSchedule(blank);
-			}
-			else
-			{
-				EditSchedule(blank);
-			}
-		}
-
-		return response;
 	}
 
 	public Response RemoveSchedule(string scheduleId)
@@ -173,39 +151,12 @@ public class PracticeService : IPracticeService
 		return new Response();
 	}
 
-	private void EditSchedule(PracticeScheduleBlank blank)
+	public Item[] GetCompanies()
 	{
-		Guid id = Guid.Parse(blank.Id);
-		Guid practiceid = Guid.Parse(blank.PracticeId);
-		Guid groupid = Guid.Parse(blank.GroupId);
-		Guid practiceleadid = Guid.Parse(blank.PracticeLeadId);
-		DateOnly dateStart = DateOnly.FromDateTime(blank.DateStart);
-		DateOnly dateEnd = DateOnly.FromDateTime(blank.DateEnd);
+		return _companyService.GetAllCompany();
 
-		Practiceschedule? practiceschedule = _practiceRepository.GetPracticeScheduleById(id);
-
-		practiceschedule.Practiceid = practiceid;
-		practiceschedule.Groupid = groupid;
-		practiceschedule.Practiceleadid = practiceleadid;
-		practiceschedule.Datestart = dateStart;
-		practiceschedule.Dateend = dateEnd;
-
-		_practiceRepository.EditPracticeSchedule(practiceschedule);
 	}
 
-	private void AddSchedule(PracticeScheduleBlank blank)
-	{
-		Guid id = Guid.NewGuid();
-		Guid practiceid = Guid.Parse(blank.PracticeId);
-		Guid groupid = Guid.Parse(blank.GroupId);
-		Guid practiceleadid = Guid.Parse(blank.PracticeLeadId);
-		DateOnly dateStart = DateOnly.FromDateTime(blank.DateStart);
-		DateOnly dateEnd = DateOnly.FromDateTime(blank.DateEnd);
-
-		Practiceschedule newSchedule = new Practiceschedule(id, practiceid, groupid, practiceleadid, dateStart, dateEnd);
-
-		_practiceRepository.AddSchedule(newSchedule);
-	}
 
 	private void AddPractice(Item practice)
 	{

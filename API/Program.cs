@@ -66,6 +66,7 @@ builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 
 builder.Services.AddTransient<IAdminPanelService, AdminPanelService>();
+builder.Services.AddTransient<ISavePracticeScheduleService, SavePracticeScheduleService>();
 builder.Services.AddTransient<VUserService>();
 builder.Services.AddTransient<VScheduleService>();
 
