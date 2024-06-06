@@ -144,6 +144,17 @@ public class PracticeRepository : IPracticeRepository
 		_context.SaveChanges();
 	}
 
+	public Practicelog? GetPracticeLogsById(Guid id)
+	{
+		return _context.Practicelogs.FirstOrDefault(log => log.Id == id);
+	}
+
+	public void EditPracticeLog(Practicelog log)
+	{
+		_context.Practicelogs.Update(log);
+		_context.SaveChanges();
+	}
+
 	public Practiceschedule GetPracticeScheduleById(Guid id)
 	{
 		return _context.Practiceschedules

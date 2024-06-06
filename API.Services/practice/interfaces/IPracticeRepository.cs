@@ -25,4 +25,6 @@ public interface IPracticeRepository
     void EditPracticeSchedule(Practiceschedule practiceschedule);
     void RemovePracticeSchedule(Practiceschedule schedule);
     void AddPracticeLogs(Practicelog[] toArray);
+    Practicelog? GetPracticeLogsById(Guid id);
+    void EditPracticeLog(Practicelog log);
 }

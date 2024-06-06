@@ -9,4 +9,5 @@ public interface ICompanyService
     Item[] GetAllCompany();
     Response SaveCompany(Item company);
     Response RemoveCompany(string companyId);
+    Item? GetCompanyByName(string companyName);
 }

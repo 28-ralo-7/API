@@ -17,4 +17,6 @@ public interface IPracticeService
     void RemovePracticeSchedulesByGroupId(Guid groupId);
     Response RemoveSchedule(string scheduleId);
     Item[] GetCompanies();
+    void SavePracticeLogGrade(string logId, string grade);
+    void SavePracticeLogCompany(string logId, string companyName);
 }

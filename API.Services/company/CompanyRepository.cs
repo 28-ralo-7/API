@@ -1,4 +1,5 @@
 using API.Database;
+using API.Domain.shared;
 using API.Services.company.interfaces;
 
 namespace API.Services.company;
@@ -48,5 +49,10 @@ public class CompanyRepository : ICompanyRepository
     {
         _context.Companies.Update(company);
         _context.SaveChanges();
+    }
+
+    public Company? GetCompanyByName(string companyName)
+    {
+        return _context.Companies.FirstOrDefault(company => company.Name == companyName);
     }
 }

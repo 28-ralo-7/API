@@ -1,3 +1,4 @@
+using System.Diagnostics.Eventing.Reader;
 using API.Domain.practice.domain;
 using API.Domain.practice.view;
 using API.Domain.shared;
@@ -64,5 +65,23 @@ public class PracticeController : BaseController
         }
 
         return response;
+    }
+    
+    [Authorize(Roles = "2")]
+    [HttpPost]
+    public Response SavePracticeLogGrade(string logId, string? grade)
+    {
+        _practiceService.SavePracticeLogGrade(logId, grade);
+
+        return new Response();
+    }
+    
+    [Authorize(Roles = "2")]
+    [HttpPost]
+    public Response SavePracticeLogCompany(string logId, string companyName)
+    {
+        _practiceService.SavePracticeLogCompany(logId, companyName);
+
+        return new Response();
     }
 }

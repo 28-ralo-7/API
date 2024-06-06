@@ -8,6 +8,7 @@ namespace API.Services.company;
 public class CompanyService : ICompanyService
 {
     private readonly ICompanyRepository _companyRepository;
+    private ICompanyService _companyServiceImplementation;
 
     public CompanyService(ICompanyRepository companyRepository)
     {
@@ -52,7 +53,7 @@ public class CompanyService : ICompanyService
             {
                 response.AddError("Такая компания уже есть");
             }
-            else if (String.IsNullOrWhiteSpace(company.Value))
+            else if (existsСompany == null)
             {
                 AddCompany(company);
             }
@@ -75,9 +76,19 @@ public class CompanyService : ICompanyService
         return new Response();
     }
 
+    public Item? GetCompanyByName(string companyName)
+    {
+        Company? company = _companyRepository.GetCompanyByName(companyName);
+        
+        return company != null 
+            ? new Item(company.Id.ToString(), company.Name)
+            : null;
+    }
     private void AddCompany(Item company)
     {
-        Guid id = Guid.NewGuid();
+        Guid id = String.IsNullOrWhiteSpace(company.Value)
+            ? Guid.NewGuid()
+            : Guid.Parse(company.Value);
         Company newCompany = new Company(id, company.Label);
 
         _companyRepository.AddCompany(newCompany);

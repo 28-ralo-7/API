@@ -69,10 +69,6 @@ namespace API.Services.user
 
             foreach (User user in users)
             {
-                if (userDomains.Count == 42)
-                {
-                    var a = 2;
-                }
                 GroupDomain? groupDomain = _groupService.GetGroupById(user.Groupid);
                 Database.Role role = _userRepository.GetRole(user.Roletype);
                 UserDomain userDomain = new UserDomain(user, groupDomain,role );

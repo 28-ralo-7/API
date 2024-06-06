@@ -12,12 +12,10 @@ public class PracticeService : IPracticeService
 {
 	private readonly IPracticeRepository _practiceRepository;
 	private readonly ICompanyService _companyService;
-	private readonly VScheduleService _vScheduleService;
 
-	public PracticeService(IPracticeRepository practiceRepository, VScheduleService vScheduleService, ICompanyService companyService)
+	public PracticeService(IPracticeRepository practiceRepository, ICompanyService companyService)
 	{
 		_practiceRepository = practiceRepository;
-		_vScheduleService = vScheduleService;
 		_companyService = companyService;
 	}
 
@@ -155,6 +153,52 @@ public class PracticeService : IPracticeService
 	{
 		return _companyService.GetAllCompany();
 
+	}
+
+	public void SavePracticeLogGrade(string logId, string grade)
+	{
+		bool id = Guid.TryParse(logId, out Guid guid);
+		Practicelog? log = _practiceRepository.GetPracticeLogsById(guid);
+
+		if (log != null)
+		{
+			int? newGrade = grade != null ? Convert.ToInt32(grade) : null;
+			log.Grade = newGrade;
+
+			_practiceRepository.EditPracticeLog(log);
+		}
+	}
+
+	public void SavePracticeLogCompany(string logId, string companyName)
+	{
+		bool id = Guid.TryParse(logId, out Guid guid);
+		string formatedCompanyName = companyName.Trim();
+		Practicelog? log = _practiceRepository.GetPracticeLogsById(guid);
+
+		if (log != null)
+		{
+			Item? existsCompany = _companyService.GetCompanyByName(formatedCompanyName);
+
+			if (existsCompany == null)
+			{
+				Guid newCompanyId = Guid.NewGuid();
+				Item newCompany = new Item(newCompanyId.ToString(), formatedCompanyName);
+
+				log.Companyid = newCompanyId;
+
+				_practiceRepository.EditPracticeLog(log);
+				_companyService.SaveCompany(newCompany);
+			}
+			else
+			{
+				log.Companyid = Guid.Parse(existsCompany.Value);
+
+				existsCompany.Label = formatedCompanyName;
+				
+				_practiceRepository.EditPracticeLog(log);
+				_companyService.SaveCompany(existsCompany);
+			}
+		}
 	}
 
 
