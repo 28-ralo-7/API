@@ -1,9 +1,7 @@
-using API.Domain.practice;
-using API.Domain.practice.blank;
-using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Services.practice.interfaces;
 
@@ -19,4 +17,6 @@ public interface IPracticeService
     Item[] GetCompanies();
     void SavePracticeLogGrade(string logId, string grade);
     void SavePracticeLogCompany(string logId, string companyName);
+    Response UploadContract(IFormFile file, string logId);
+    Response UploadReport(IFormFile file, string logId);
 }

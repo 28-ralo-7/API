@@ -155,6 +155,18 @@ public class PracticeRepository : IPracticeRepository
 		_context.SaveChanges();
 	}
 
+	public void SaveContractPath(Practicelog log)
+	{
+		_context.Practicelogs.Update(log);
+		_context.SaveChanges();
+	}
+	
+	public void SaveReportPath(Practicelog log)
+	{
+		_context.Practicelogs.Update(log);
+		_context.SaveChanges();
+	}
+
 	public Practiceschedule GetPracticeScheduleById(Guid id)
 	{
 		return _context.Practiceschedules

@@ -27,4 +27,6 @@ public interface IPracticeRepository
     void AddPracticeLogs(Practicelog[] toArray);
     Practicelog? GetPracticeLogsById(Guid id);
     void EditPracticeLog(Practicelog log);
+    void SaveContractPath(Practicelog log);
+    void SaveReportPath(Practicelog log);
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics.Eventing.Reader;
 using API.Domain.practice.domain;
 using API.Domain.practice.view;
 using API.Domain.shared;
@@ -84,4 +83,25 @@ public class PracticeController : BaseController
 
         return new Response();
     }
+
+    [Authorize(Roles = "2")]
+    [HttpPost]
+    public Response UploadContract(string logId)
+    {
+        IFormFile file = Request.Form.Files[0];
+        Response response = _practiceService.UploadContract(file, logId);
+
+        return response;
+    }
+    
+    [Authorize(Roles = "2")]
+    [HttpPost]
+    public Response UploadReport(string logId)
+    {
+        IFormFile file = Request.Form.Files[0];
+        Response response = _practiceService.UploadReport(file, logId); 
+
+        return response;
+    }
+
 }
