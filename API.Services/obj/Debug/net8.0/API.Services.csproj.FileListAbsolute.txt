@@ -38,3 +38,14 @@ C:\Users\dkoze\API\API.Services\obj\Debug\net8.0\refint\API.Services.dll
 C:\Users\dkoze\API\API.Services\obj\Debug\net8.0\API.Services.pdb
 C:\Users\dkoze\API\API.Services\obj\Debug\net8.0\API.Services.genruntimeconfig.cache
 C:\Users\dkoze\API\API.Services\obj\Debug\net8.0\ref\API.Services.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.Http.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.WebUtilities.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.Net.Http.Headers.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Extensions.dll
+C:\Users\ДИ\Desktop\API\API.Services\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
