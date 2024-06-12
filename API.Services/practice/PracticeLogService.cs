@@ -32,8 +32,9 @@ public class PracticeLogService : IPracticeLogService
         {
             Guid id = new Guid(practiceId);
 
-            Practice practice = _practiceRepository.GetPracticeById(id);
-            Practiceschedule practiceschedule = _practiceRepository.GetPracticeScheduleByPracticeId(practice.Id);
+            Practiceschedule practiceschedule = _practiceRepository.GetPracticeScheduleById(id);
+
+            Practice practice = _practiceRepository.GetPracticeById(practiceschedule.Practiceid);
             
             GroupDomain groupDomain = _groupService.GetGroupById(practiceschedule.Groupid);
             

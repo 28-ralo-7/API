@@ -4,6 +4,7 @@ using API.Database;
 using API.Services.user.interfaces;
 using API.Services.user.Interfaces;
 using API.Domain.group;
+using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
@@ -175,6 +176,11 @@ namespace API.Services.user
             }
 
             User user = new User(id, blank.Surname, blank.Name, blank.Patronymic, blank.Login, passwordHash, roleType, groupId, false);
+
+            if (user.Roletype == 3)
+            {
+                _practiceService.AddPracticeLogByUser(user);
+            }
             
             _userRepository.AddUser(user);
         }
@@ -185,13 +191,17 @@ namespace API.Services.user
             int roleType = Int32.Parse(blank.RoleId);
             
             User user = _userRepository.GetUserById(id);
-
+            
             user.Surname = blank.Surname.Trim();
             user.Name = blank.Name.Trim();
             user.Patronomic = blank.Patronymic?.Trim();
             user.Login = blank.Login.Trim();
             user.Roletype = roleType;
 
+            if (blank.RoleId == "3" && blank.GroupId != null && Guid.Parse(blank.GroupId) != user.Groupid)
+            {
+                _practiceService.ChangeUserLogByNewGroup(user.Groupid, Guid.Parse(blank.GroupId), user.Id);
+            }
             if (blank.RoleId == "3")
             {
                 Guid groupId = Guid.Parse(blank.GroupId);

@@ -1,8 +1,14 @@
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using API.Database;
+using API.Domain.group;
+using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
 using API.Services.company.interfaces;
+using API.Services.group.interfaces;
 using API.Services.practice.interfaces;
 using Microsoft.AspNetCore.Http;
 
@@ -12,28 +18,40 @@ public class PracticeService : IPracticeService
 {
 	private readonly IPracticeRepository _practiceRepository;
 	private readonly ICompanyService _companyService;
+	private readonly IGroupService _groupService;
 
-	public PracticeService(IPracticeRepository practiceRepository, ICompanyService companyService)
+	public PracticeService(IPracticeRepository practiceRepository, ICompanyService companyService, IGroupService groupService)
 	{
 		_practiceRepository = practiceRepository;
 		_companyService = companyService;
+		_groupService = groupService;
 	}
 
 	public Item[] GetPracticeItemsByPermissions(UserDomain systemUser)
 	{
 		Practiceschedule[] practiceSchedules = _practiceRepository.GetPracticeSchedulesByUserId(systemUser.Id);
+		
 		Guid[] practiceIds = practiceSchedules
 			.Select(ps => ps.Practiceid)
 			.Distinct()
 			.ToArray();
+		Guid[] groupIds = practiceSchedules.Select(ps => ps.Groupid).ToArray();
 
+		GroupDomain[] groups = _groupService.GetGroupByIds(groupIds);
 		Practice[] practices = _practiceRepository.GetPracticesByIds(practiceIds);
 
-		Item[] items = practices
-			.Select(practice => new Item(practice.Id.ToString(), practice.Name))
-			.ToArray();
+		List<Item> practiceOptions = new List<Item>();
+		
+		for (int i = 0; i < practiceSchedules.Length; i++)
+		{
+			GroupDomain group = groups.First(group => group.Id == practiceSchedules[i].Groupid);
+			Practice practice = practices.First(practice => practice.Id == practiceSchedules[i].Practiceid);
+			string practiceOptionName = practice.Name + $"({group.Name})";
+			
+			practiceOptions.Add(new Item(practiceSchedules[0].Id.ToString(), practiceOptionName));
+		}
 
-		return items;
+		return practiceOptions.ToArray();
 	}
 
 	public void RemovePracticeLogsByUserIds(Guid[] userIds)
@@ -223,7 +241,7 @@ public class PracticeService : IPracticeService
 			}
 
 			log.Contract = path;
-			_practiceRepository.SaveContractPath(log);
+			_practiceRepository.EditPracticeLog(log);
 		}
 		else
 		{
@@ -255,7 +273,7 @@ public class PracticeService : IPracticeService
 			}
 
 			log.Report = path;
-			_practiceRepository.SaveReportPath(log);
+			_practiceRepository.EditPracticeLog(log);
 		}
 		else
 		{
@@ -263,6 +281,75 @@ public class PracticeService : IPracticeService
 		}
 
 		return response;
+	}
+
+	public Guid GetPracticeScheduleIdByGroupId(Guid? groupid)
+	{
+		Practiceschedule practiceschedule = _practiceRepository.GetPracticeScheduleByGroupId(groupid);
+
+		return practiceschedule.Id ;
+
+	}
+
+	public void AddPracticeLogByUser(User user)
+	{
+		Practiceschedule[] practiceSchedules = _practiceRepository.GetPracticeSchedulesByGroupId(user.Groupid);
+
+		for (int i = 0; i < practiceSchedules.Length; i++)
+		{
+			Practicelog log = new Practicelog(Guid.NewGuid(), user.Id, practiceSchedules[i].Id, null, null, null, null, false);
+		
+			_practiceRepository.AddPracticeLog(log);	
+		}
+	}
+
+	public void ChangeUserLogByNewGroup(Guid? oldGroup, Guid newGroup, Guid userId)
+	{
+		Practiceschedule[] oldPracticeschedules = _practiceRepository.GetPracticeSchedulesByGroupId(oldGroup!);
+		Practiceschedule[] newPracticeSchedules = _practiceRepository.GetPracticeSchedulesByGroupId(newGroup);
+
+		if(oldPracticeschedules.Length != 0)	
+		{
+			_practiceRepository.RemovePracticeLogsByUserId(userId);
+		}
+
+		for (int i = 0; i < newPracticeSchedules.Length; i++)
+		{
+			Practicelog log = new Practicelog(Guid.NewGuid(), userId, newPracticeSchedules[i].Id, null, null, null, null,
+				false);
+
+			_practiceRepository.AddPracticeLog(log);
+		}
+	}
+
+	public Response DownloadContract(string logId)
+	{
+		Guid logGuid = Guid.Parse(logId);
+		Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
+		
+		FileInfo fileInfo = new FileInfo(log.Contract);
+
+		byte[] buffer = { };
+
+		using (FileStream fstream = File.OpenRead(log.Contract))
+		{
+			buffer = new byte[fstream.Length];
+
+			fstream.ReadAsync(buffer, 0, buffer.Length);
+
+		}
+
+		string base64String = Convert.ToBase64String(buffer);
+		
+		var fileData = new
+		{
+			FileName = Path.GetFileName(log.Contract),
+			FileContentBase64 = base64String
+		};
+		
+		string jsonData = JsonSerializer.Serialize(fileData);
+
+		return new Response();
 	}
 
 	private void AddPractice(Item practice)

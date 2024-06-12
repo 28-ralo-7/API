@@ -106,7 +106,7 @@ public class PracticeRepository : IPracticeRepository
 		_context.SaveChanges();
 	}
 
-	public Practiceschedule[] GetPracticeSchedulesByGroupId(Guid groupId)
+	public Practiceschedule[] GetPracticeSchedulesByGroupId(Guid? groupId)
 	{
 		return _context.Practiceschedules
 			.Where(ps => ps.Groupid == groupId)
@@ -155,14 +155,27 @@ public class PracticeRepository : IPracticeRepository
 		_context.SaveChanges();
 	}
 
-	public void SaveContractPath(Practicelog log)
+	public Practiceschedule? GetPracticeScheduleByGroupId(Guid? groupid)
 	{
-		_context.Practicelogs.Update(log);
+		return _context.Practiceschedules.FirstOrDefault(ps => ps.Groupid == groupid);
+	}
+
+	public void AddPracticeLog(Practicelog log)
+	{
+		_context.Practicelogs.Add(log);
 		_context.SaveChanges();
 	}
-	
-	public void SaveReportPath(Practicelog log)
+
+	public Practicelog? GetPracticeLogsByUserId(Guid userId)
 	{
+		return _context.Practicelogs.FirstOrDefault(log => log.Userid == userId);
+	}
+
+	public void RemovePracticeLogsByUserId(Guid userId)
+	{
+		Practicelog log = _context.Practicelogs.First(log => log.Userid == userId);
+		log.Isremoved = true;
+
 		_context.Practicelogs.Update(log);
 		_context.SaveChanges();
 	}

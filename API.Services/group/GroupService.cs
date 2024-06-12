@@ -12,12 +12,10 @@ namespace API.Services.group;
 public class GroupService : IGroupService
 {
     private readonly IGroupRepository _groupRepository;
-    private readonly IPracticeService _practiceService;
 
-    public GroupService(IGroupRepository groupRepository, IPracticeService practiceService)
+    public GroupService(IGroupRepository groupRepository)
     {
         _groupRepository = groupRepository;
-        _practiceService = practiceService;
     }
     public GroupDomain GetGroupById(Guid? groupId)
     {

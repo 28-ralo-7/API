@@ -1,3 +1,5 @@
+using API.Database;
+using API.Domain.practice.domain;
 using API.Domain.shared;
 using API.Domain.tools;
 using API.Domain.user;
@@ -19,4 +21,8 @@ public interface IPracticeService
     void SavePracticeLogCompany(string logId, string companyName);
     Response UploadContract(IFormFile file, string logId);
     Response UploadReport(IFormFile file, string logId);
+    Guid GetPracticeScheduleIdByGroupId(Guid? groupid);
+    void AddPracticeLogByUser(User user);
+    void ChangeUserLogByNewGroup(Guid? oldGroup, Guid newGroup, Guid userId);
+    Response DownloadContract(string logId);
 }

@@ -12,7 +12,7 @@ using API.Services.user.interfaces;
 
 namespace API.Services.adminPanel;
 
-public class AdminPanelService: IAdminPanelService
+public class AdminPanelService : IAdminPanelService
 {
     private readonly IUserService _userService;
     private readonly IGroupService _groupService;
@@ -22,7 +22,10 @@ public class AdminPanelService: IAdminPanelService
     private readonly IPracticeLogService _practiceLogService;
     private readonly ISavePracticeScheduleService _practiceScheduleService;
 
-    public AdminPanelService(IUserService userService, IGroupService groupService, IPracticeService practiceService, ICompanyService companyService, ICascadeGroupRemoveService cascadeGroupRemoveService, IPracticeLogService practiceLogService, ISavePracticeScheduleService practiceScheduleService)
+    public AdminPanelService(IUserService userService, IGroupService groupService,
+        IPracticeService practiceService, ICompanyService companyService,
+        ICascadeGroupRemoveService cascadeGroupRemoveService,
+        IPracticeLogService practiceLogService, ISavePracticeScheduleService practiceScheduleService)
     {
         _userService = userService;
         _groupService = groupService;

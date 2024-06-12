@@ -103,5 +103,13 @@ public class PracticeController : BaseController
 
         return response;
     }
+    
+    [Authorize(Roles = "2")]
+    [HttpPost]
+    public Response DownloadContract(string logId)
+    {
+        Response response = _practiceService.DownloadContract(logId);
 
+        return response;
+    }
 }

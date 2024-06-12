@@ -18,7 +18,7 @@ public interface IPracticeRepository
     void RemovePractice(Practice practice);
     void RemovePracticeSchedules(Practiceschedule[] schedules);
     void RemovePracticeLogs(Practicelog[] logs);
-    Practiceschedule[] GetPracticeSchedulesByGroupId(Guid groupId);
+    Practiceschedule[] GetPracticeSchedulesByGroupId(Guid? groupId);
     Practiceschedule[] GetAllPracticeSchedules();
     void AddSchedule(Practiceschedule newSchedule);
     Practiceschedule GetPracticeScheduleById(Guid id);
@@ -27,6 +27,8 @@ public interface IPracticeRepository
     void AddPracticeLogs(Practicelog[] toArray);
     Practicelog? GetPracticeLogsById(Guid id);
     void EditPracticeLog(Practicelog log);
-    void SaveContractPath(Practicelog log);
-    void SaveReportPath(Practicelog log);
+    Practiceschedule? GetPracticeScheduleByGroupId(Guid? groupid);
+    void AddPracticeLog(Practicelog log);
+    Practicelog GetPracticeLogsByUserId(Guid userId);
+    void RemovePracticeLogsByUserId(Guid userId);
 }
