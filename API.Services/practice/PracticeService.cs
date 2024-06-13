@@ -219,70 +219,6 @@ public class PracticeService : IPracticeService
 		}
 	}
 
-	public Response UploadContract(IFormFile file, string logId)
-	{
-		Response response = new Response();
-		Guid logGuid = Guid.Parse(logId);
-		Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
-
-		string extension = Path.GetExtension(file.FileName);
-		string path = $"./Storage/contract_{Guid.NewGuid()}_{DateTime.Now.ToShortDateString()}{extension}";
-		string[] validExtension = new[] { ".pdf", ".txt", ".doc", ".docx"};
-		
-		if (validExtension.Contains(extension) && log != null)
-		{
-			if (log.Contract != null)
-			{
-				File.Delete(log.Contract);
-			}
-
-			using (Stream fileStream = new FileStream(path, FileMode.Create)) {
-				file.CopyToAsync(fileStream);
-			}
-
-			log.Contract = path;
-			_practiceRepository.EditPracticeLog(log);
-		}
-		else
-		{
-			response.AddError($"Некорректный тип файла. Допустимые форматы {String.Join(",", validExtension)}");
-		}
-
-		return response;
-	}
-	
-	public Response UploadReport(IFormFile file, string logId)
-	{
-		Response response = new Response();
-		Guid logGuid = Guid.Parse(logId);
-		Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
-
-		string extension = Path.GetExtension(file.FileName);
-		string path = $"./Storage/report_{Guid.NewGuid()}_{DateTime.Now.ToShortDateString()}{extension}";
-		string[] validExtension = new[] { ".pdf", ".txt", ".doc", ".docx"};
-		
-		if (validExtension.Contains(extension) && log != null)
-		{
-			if (log.Report != null)
-			{
-				File.Delete(log.Report);
-			}
-
-			using (Stream fileStream = new FileStream(path, FileMode.Create)) {
-				file.CopyToAsync(fileStream);
-			}
-
-			log.Report = path;
-			_practiceRepository.EditPracticeLog(log);
-		}
-		else
-		{
-			response.AddError($"Некорректный тип файла. Допустимые форматы {String.Join(",", validExtension)}");
-		}
-
-		return response;
-	}
-
 	public Guid GetPracticeScheduleIdByGroupId(Guid? groupid)
 	{
 		Practiceschedule practiceschedule = _practiceRepository.GetPracticeScheduleByGroupId(groupid);
@@ -320,36 +256,6 @@ public class PracticeService : IPracticeService
 
 			_practiceRepository.AddPracticeLog(log);
 		}
-	}
-
-	public Response DownloadContract(string logId)
-	{
-		Guid logGuid = Guid.Parse(logId);
-		Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
-		
-		FileInfo fileInfo = new FileInfo(log.Contract);
-
-		byte[] buffer = { };
-
-		using (FileStream fstream = File.OpenRead(log.Contract))
-		{
-			buffer = new byte[fstream.Length];
-
-			fstream.ReadAsync(buffer, 0, buffer.Length);
-
-		}
-
-		string base64String = Convert.ToBase64String(buffer);
-		
-		var fileData = new
-		{
-			FileName = Path.GetFileName(log.Contract),
-			FileContentBase64 = base64String
-		};
-		
-		string jsonData = JsonSerializer.Serialize(fileData);
-
-		return new Response();
 	}
 
 	private void AddPractice(Item practice)

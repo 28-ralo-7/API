@@ -15,5 +15,6 @@ namespace API.Services.user.interfaces
         Response RemoveUser(string userId);
         Response RemoveUsersByGroup(Guid groupId);
         User[] GetStudentsByGroupId(Guid groupId);
+        UserDomain GetUserById(Guid logUserid);
     }
 }
