@@ -112,6 +112,7 @@ public class PracticeController : BaseController
 	public FileResult DownloadContract(string logId)
 	{
 		FileResponse response = _fileService.DownloadContract(logId);
+		Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
 		return File(response.Content, response.Extension, response.FileName);
 	}

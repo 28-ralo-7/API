@@ -47,8 +47,8 @@ public class CompanyService : ICompanyService
         else
         {
             Guid id = company.Value.Length > 0 ? Guid.Parse(company.Value) : new Guid();
-            Company? existsСompany = _companyRepository.GetAllCompany().FirstOrDefault(x => x.Name.Trim() == company.Label.Trim());
-            
+            Company? existsСompany = _companyRepository.GetAllCompany().FirstOrDefault(x => x.Id == id);
+
             if (id != existsСompany?.Id && existsСompany?.Name.Trim() == company.Label.Trim())
             {
                 response.AddError("Такая компания уже есть");
@@ -70,7 +70,8 @@ public class CompanyService : ICompanyService
     {
         Guid id = Guid.Parse(companyId);
         Company company = _companyRepository.GetCompanyById(id);
-        
+        company.Isremoved = true;
+
         _companyRepository.RemoveCompany(company);
 
         return new Response();
