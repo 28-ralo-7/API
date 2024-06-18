@@ -9,4 +9,6 @@ public interface IFileService
 	FileResponse DownloadReport(string logId);
 	Response UploadContract(IFormFile file, string logId);
 	Response UploadReport(IFormFile file, string logId);
+	Response RemoveContract(string logId);
+	Response RemoveReport(string logId);
 }

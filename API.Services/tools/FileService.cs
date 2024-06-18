@@ -31,7 +31,7 @@ public class FileService : IFileService
 		byte[] buffer = System.IO.File.ReadAllBytes(fileInfo.FullName);
 
 		string fileExtension = "application" + fileInfo.Extension.Replace('.', '/');
-		string fileName = userDomain.Surname + "_contract" + fileInfo.Extension; 
+		string fileName = userDomain.Surname + "_договор" + fileInfo.Extension; 
 
 		return new FileResponse(buffer, fileExtension, fileName);
 	}
@@ -45,10 +45,10 @@ public class FileService : IFileService
 
 		FileInfo fileInfo = new FileInfo(log.Report);
 
-		byte[] buffer = System.IO.File.ReadAllBytes(fileInfo.FullName);
+		byte[] buffer = File.ReadAllBytes(fileInfo.FullName);
 
 		string fileExtension = "application" + fileInfo.Extension.Replace('.', '/');
-		string fileName = userDomain.Surname + "_report" + fileInfo.Extension; 
+		string fileName = userDomain.Surname + "_отчёт" + fileInfo.Extension; 
 
 		return new FileResponse(buffer, fileExtension, fileName);
 	}
@@ -71,7 +71,7 @@ public class FileService : IFileService
 			}
 
 			using (FileStream fileStream = new FileStream(path, FileMode.Create)) {
-				file.CopyToAsync(fileStream);
+				file.CopyTo(fileStream);
 			}
 
 			log.Contract = path;
@@ -103,7 +103,7 @@ public class FileService : IFileService
 			}
 
 			using (FileStream fileStream = new FileStream(path, FileMode.Create)) {
-				file.CopyToAsync(fileStream);
+				file.CopyTo(fileStream);
 			}
 
 			log.Report = path;
@@ -115,5 +115,53 @@ public class FileService : IFileService
 		}
 
 		return response;
+	}
+
+	public Response RemoveContract(string logId)
+	{
+		try
+		{
+			Response response = new Response();
+			Guid logGuid = Guid.Parse(logId);
+			Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
+
+			if (log != null)
+			{
+				File.Delete(log.Contract);
+
+				log.Contract = null;
+				_practiceRepository.EditPracticeLog(log);
+			}
+
+			return response;
+		}
+		catch (Exception e)
+		{
+			return new Response();
+		}
+	}
+
+	public Response RemoveReport(string logId)
+	{
+		try
+		{
+			Response response = new Response();
+			Guid logGuid = Guid.Parse(logId);
+			Practicelog? log = _practiceRepository.GetPracticeLogsById(logGuid);
+
+			if (log != null)
+			{
+				File.Delete(log.Report);
+
+				log.Report = null;
+				_practiceRepository.EditPracticeLog(log);
+			}
+
+			return response;
+		}
+		catch (Exception e)
+		{
+			return new Response();
+		}
 	}
 }

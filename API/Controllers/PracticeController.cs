@@ -109,6 +109,24 @@ public class PracticeController : BaseController
 
 	[Authorize(Roles = "2")]
 	[HttpPost]
+	public Response RemoveContract(string logId)
+	{
+		Response response = _fileService.RemoveContract(logId);
+
+		return response;
+	}
+	
+	[Authorize(Roles = "2")]
+	[HttpPost]
+	public Response RemoveReport(string logId)
+	{
+		Response response = _fileService.RemoveReport(logId); 
+
+		return response;
+	}
+
+	[Authorize(Roles = "2")]
+	[HttpPost]
 	public FileResult DownloadContract(string logId)
 	{
 		FileResponse response = _fileService.DownloadContract(logId);
@@ -122,6 +140,7 @@ public class PracticeController : BaseController
 	public FileResult DownloadReport(string logId)
 	{
 		FileResponse response = _fileService.DownloadReport(logId);
+		Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
 		return File(response.Content, response.Extension, response.FileName);
 	}

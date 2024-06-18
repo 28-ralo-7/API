@@ -32,20 +32,20 @@ public partial class PracticetrackerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Company>(entity =>
-        {
-            entity
-                .ToTable("company")
-                .HasKey(u => u.Id);
-            
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Isremoved)
-                .HasDefaultValue(false)
-                .HasColumnName("isremoved");
-            entity.Property(e => e.Name)
-                .HasColumnType("character varying")
-                .HasColumnName("name");
-        });
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity
+                    .ToTable("company")
+                    .HasKey(u => u.Id);
+                
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Isremoved)
+                    .HasDefaultValue(false)
+                    .HasColumnName("isremoved");
+                entity.Property(e => e.Name)
+                    .HasColumnType("character varying")
+                    .HasColumnName("name");
+            });
 
         modelBuilder.Entity<Group>(entity =>
         {            
